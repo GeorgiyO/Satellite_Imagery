@@ -7,12 +7,12 @@ public enum LocationType {
     ATTRACTION;
 
     public static LocationType fromString(String str) {
-        return switch (str.toUpperCase()) {
-            case "COUNTRY" -> COUNTRY;
-            case "REGION" -> REGION;
-            case "CITY" -> CITY;
-            case "ATTRACTION" -> ATTRACTION;
-            default -> throw new IllegalStateException("Unexpected value: " + str);
-        };
+        switch (str.toUpperCase()) {
+            case "COUNTRY": return COUNTRY;
+            case "REGION": return REGION;
+            case "CITY": return CITY;
+            case "ATTRACTION": return ATTRACTION;
+            default: throw new IllegalStateException("Unexpected value: " + str);
+        }
     }
 }

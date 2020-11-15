@@ -59,19 +59,23 @@ public class ImageController {
 
         LocationType type = LocationType.fromString(locationType);
 
-        int id = switch (type) {
-            case COUNTRY -> createCountryImage(name, description);
-            case REGION -> 0;
-            case CITY -> 0;
-            case ATTRACTION -> 0;
-            default -> throw new IllegalStateException("Unexpected value: " + type.toString());
-        };
+        int id = createLocation(type, name, description);
         createImage(type, id, file);
 
         return "redirect:/" + locationType + "/" + name;
     }
 
-    private int createCountryImage(String name, String description) {
+    private int createLocation(LocationType type, String name, String description) {
+        switch (type) {
+            case COUNTRY: return createCountry(name, description);
+            case REGION: return 0;
+            case CITY: return 0;
+            case ATTRACTION: return 0;
+            default: throw new IllegalStateException("Unexpected value: " + type.toString());
+        }
+    }
+
+    private int createCountry(String name, String description) {
         Country country = new Country();
         country.setName(name);
         country.setDescription(description);
