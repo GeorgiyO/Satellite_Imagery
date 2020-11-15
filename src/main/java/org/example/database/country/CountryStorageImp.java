@@ -1,6 +1,6 @@
-package org.example.database.image.country;
+package org.example.database.country;
 
-import org.example.domain.image.Country;
+import org.example.domain.location.Country;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -31,14 +31,14 @@ public class CountryStorageImp implements CountryStorage {
 
     @Override
     public void add(Country country) {
-        String sqlQuery = "INSERT INTO Country (name, description, image) VALUES (?, ?, ?)";
-        jdbcTemplate.update(sqlQuery, country.getName(), country.getDescription(), country.getImage());
+        String sqlQuery = "INSERT INTO Country (name, description) VALUES (?, ?)";
+        jdbcTemplate.update(sqlQuery, country.getName(), country.getDescription());
     }
 
     @Override
     public void update(Country country) {
-        String sqlQuery = "UPDATE Country SET name = ?, description = ?, image = ?";
-        jdbcTemplate.update(sqlQuery, country.getName(), country.getDescription(), country.getImage());
+        String sqlQuery = "UPDATE Country SET name = ?, description = ?";
+        jdbcTemplate.update(sqlQuery, country.getName(), country.getDescription());
     }
 
     @Override

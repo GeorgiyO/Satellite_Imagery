@@ -1,14 +1,13 @@
-package org.example.domain.image;
+package org.example.domain.location;
 
 import java.sql.Blob;
 
-public class City {
+public class Attraction {
 
     private int id;
     private String description;
     private String name;
-    private Blob image;
-    private int regionId;
+    private int cityId;
 
     public int getId() {
         return id;
@@ -34,19 +33,11 @@ public class City {
         this.name = name;
     }
 
-    public Blob getImage() {
-        return image;
+    public int getCityId() {
+        return cityId;
     }
 
-    public void setImage(Blob image) {
-        this.image = image;
-    }
-
-    public int getRegionId() {
-        return regionId;
-    }
-
-    public void setRegionId(int regionId) {
-        this.regionId = regionId;
+    public void setCityId(int cityId) {
+        this.cityId = cityId;
     }
 }

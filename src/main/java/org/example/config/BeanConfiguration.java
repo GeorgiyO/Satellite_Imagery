@@ -1,7 +1,7 @@
 package org.example.config;
 
-import org.example.database.image.country.CountryStorage;
-import org.example.database.image.country.CountryStorageImp;
+import org.example.database.country.CountryStorage;
+import org.example.database.country.CountryStorageImp;
 import org.example.database.user.MySQLUserStorage;
 import org.example.database.user.UserStorage;
 import org.springframework.context.annotation.Bean;

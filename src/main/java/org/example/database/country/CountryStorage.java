@@ -1,6 +1,6 @@
-package org.example.database.image.country;
+package org.example.database.country;
 
-import org.example.domain.image.Country;
+import org.example.domain.location.Country;
 
 public interface CountryStorage {
     Country get(int id);
