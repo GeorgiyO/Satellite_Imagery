@@ -25,7 +25,7 @@ public class CountryController {
     @Autowired
     private CountryStorage countryStorage;
 
-    @GetMapping("country/{name}")
+    @GetMapping("/Country/{name}")
     public String getPage(Model model, @PathVariable String name) {
         Country country = countryStorage.get(name);
         model.addAttribute("country", country);

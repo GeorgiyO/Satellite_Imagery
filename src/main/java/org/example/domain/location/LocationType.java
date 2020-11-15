@@ -7,7 +7,7 @@ public enum LocationType {
     ATTRACTION;
 
     public static LocationType fromString(String str) {
-        return switch (str) {
+        return switch (str.toUpperCase()) {
             case "COUNTRY" -> COUNTRY;
             case "REGION" -> REGION;
             case "CITY" -> CITY;

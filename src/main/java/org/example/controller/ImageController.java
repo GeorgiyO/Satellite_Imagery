@@ -4,6 +4,7 @@ import org.example.database.country.CountryStorage;
 import org.example.database.image.ImageStorage;
 import org.example.domain.Image;
 import org.example.domain.location.Country;
+import org.example.domain.location.Location;
 import org.example.domain.location.LocationType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -29,7 +30,7 @@ public class ImageController {
     @Autowired
     private CountryStorage countryStorage;
 
-    @GetMapping(value = "image/{location_type}/{id}", produces = MediaType.IMAGE_PNG_VALUE)
+    @GetMapping(value = "image/{locationType}/{locationId}", produces = MediaType.IMAGE_PNG_VALUE)
     public ResponseEntity<byte[]> getImageByCountry(
             @PathVariable String locationType,
             @PathVariable int locationId) throws SQLException {
@@ -43,7 +44,6 @@ public class ImageController {
         return new ResponseEntity<>(data, headers, HttpStatus.OK);
     }
 
-
     @GetMapping("moderator/image/add")
     public String getAddingImageForm(Model model) {
         return "addImageTemplate";
@@ -54,23 +54,39 @@ public class ImageController {
                            @RequestParam("parentName") String parentName,
                            @RequestParam("name") String name,
                            @RequestParam("description") String description,
-                           @RequestParam("image") MultipartFile image
-                           ) {
+                           @RequestParam("image") MultipartFile file
+                           ) throws IOException {
 
         LocationType type = LocationType.fromString(locationType);
 
-        switch (type) {
-            case COUNTRY -> {}
-            case REGION -> {}
-            case CITY -> {}
-            case ATTRACTION -> {}
+        int id = switch (type) {
+            case COUNTRY -> createCountryImage(name, description);
+            case REGION -> 0;
+            case CITY -> 0;
+            case ATTRACTION -> 0;
             default -> throw new IllegalStateException("Unexpected value: " + type.toString());
-        }
+        };
+        createImage(type, id, file);
 
         return "redirect:/" + locationType + "/" + name;
     }
 
-    private void createCountryImage() {
+    private int createCountryImage(String name, String description) {
+        Country country = new Country();
+        country.setName(name);
+        country.setDescription(description);
 
+        countryStorage.add(country);
+
+        country = countryStorage.get(name);
+        return country.getId();
+    }
+
+    private void createImage(LocationType locationType, int id, MultipartFile file) throws IOException {
+        Image image = new Image();
+        image.setLocationType(locationType);
+        image.setLocationId(id);
+        image.setData(file.getBytes());
+        imageStorage.add(image);
     }
 }

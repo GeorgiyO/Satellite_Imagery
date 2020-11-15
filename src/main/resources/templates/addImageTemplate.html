@@ -5,6 +5,21 @@
     </head>
     <body>
         <form method="POST" action="/moderator/image/add" enctype="multipart/form-data">
+            
+            <label for="type">Type:</label>
+            <input list="typeList" name="type" placeholder="Location Type">
+            <datalist id="typeList">
+                <option value="Country"></option>
+                <option value="Region"></option>
+                <option value="City"></option>
+                <option value="Attraction"></option>
+            </datalist>
+            <br><br>
+
+            <label for="parentName">Parent name (if type == country this field may be null</label>
+            <input type="text" placeholder="Parent name" name="parentName">
+            <br><br>
+
             <label for="name">Name:</label>
             <input type="text" placeholder="Name" name="name">
             <br><br>
