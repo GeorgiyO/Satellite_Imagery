@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title th:text="${country.name}"></title>
+    </head>
+    <body>
+        <p th:text="${country.description}"></p>
+        <img th:src="@{'/country/image/' + ${country.id}}"/>
+    </body>
+</html>
