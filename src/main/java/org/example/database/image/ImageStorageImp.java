@@ -34,7 +34,7 @@ public class ImageStorageImp implements ImageStorage {
 
     @Override
     public void delete(Image image) {
-        String sqlQuery = "DELETE FROM Image WHERE location_type = ?, location_id = ?";
+        String sqlQuery = "DELETE FROM Image WHERE location_type = ? AND location_id = ?";
         jdbcTemplate.update(sqlQuery, image.getLocationType().toString(), image.getLocationId());
     }
 }

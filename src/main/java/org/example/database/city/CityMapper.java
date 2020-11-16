@@ -1,6 +1,5 @@
 package org.example.database.city;
 
-import org.example.database.country.CountryStorage;
 import org.example.database.region.RegionStorage;
 import org.example.domain.location.City;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -8,4 +8,5 @@ public interface RegionStorage {
     void add(Region region);
     void update(Region region);
     void delete(int id);
+    void deleteByParentId(int parentId);
 }

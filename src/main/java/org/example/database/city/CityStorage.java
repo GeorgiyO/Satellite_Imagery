@@ -8,4 +8,5 @@ public interface CityStorage {
     void add(City city);
     void update(City city);
     void delete(int id);
+    void deleteByParentId(int parentId);
 }

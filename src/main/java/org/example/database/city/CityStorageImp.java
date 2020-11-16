@@ -1,9 +1,15 @@
 package org.example.database.city;
 
+import org.example.database.attraction.AttractionStorage;
+import org.example.database.image.ImageStorage;
+import org.example.domain.Image;
 import org.example.domain.location.City;
+import org.example.domain.location.LocationType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
+
+import java.util.List;
 
 public class CityStorageImp implements CityStorage {
 
@@ -11,6 +17,11 @@ public class CityStorageImp implements CityStorage {
     private JdbcTemplate jdbcTemplate;
     @Autowired
     private ApplicationContext context;
+
+    @Autowired
+    private AttractionStorage attractionStorage;
+    @Autowired
+    private ImageStorage imageStorage;
 
     @Override
     public City get(int id) {
@@ -46,7 +57,24 @@ public class CityStorageImp implements CityStorage {
 
     @Override
     public void delete(int id) {
+        attractionStorage.deleteByParentId(id);
+
+        Image image = new Image();
+        image.setLocationType(LocationType.CITY);
+        image.setLocationId(id);
+        imageStorage.delete(image);
+
         String sqlQuery = "DELETE FROM City WHERE id = ?";
         jdbcTemplate.update(sqlQuery, id);
+    }
+
+    @Override
+    public void deleteByParentId(int parentId) {
+        String sqlQuery = "SELECT id FROM City WHERE region_id = ?";
+        List<Integer> idList = jdbcTemplate.query(sqlQuery, (rs, i) -> rs.getInt("id"), parentId);
+
+        for (var id : idList) {
+            delete(id);
+        }
     }
 }

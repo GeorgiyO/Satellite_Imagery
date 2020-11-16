@@ -8,4 +8,5 @@ public interface AttractionStorage {
     void add(Attraction attraction);
     void update(Attraction attraction);
     void delete(int id);
+    void deleteByParentId(int parentId);
 }

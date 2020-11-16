@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Добавить изображение</title>
+        <title>Удалить изображение</title>
     </head>
     <body>
-        <form method="POST" action="/moderator/image/add" enctype="multipart/form-data">
+        <form method="POST" action="/moderator/image/delete">
             
             <label for="type">Type:</label>
             <input list="typeList" name="type" placeholder="Location Type">
@@ -16,20 +16,8 @@
             </datalist>
             <br><br>
 
-            <label for="parentName">Parent name (if type == country this field may be null</label>
-            <input type="text" placeholder="Parent name" name="parentName">
-            <br><br>
-
             <label for="name">Name:</label>
             <input type="text" placeholder="Name" name="name">
-            <br><br>
-            
-            <label for="description">Description:</label>
-            <input type="text" placeholder="Description" name="description">
-            <br><br>
-
-            <label for="name">Image:</label>
-            <input type="file" placeholder="Image" name="image" accept="image/png">
             <br><br>
 
             <input type="submit" placeholder="Send data">

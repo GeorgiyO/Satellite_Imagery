@@ -1,7 +1,5 @@
 package org.example.domain.location;
 
-import java.sql.Blob;
-
 public class Region extends Location {
 
     private Country country;
