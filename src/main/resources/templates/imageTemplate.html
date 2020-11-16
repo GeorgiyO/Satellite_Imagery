@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
     <head>
-        <title th:text="${country.name}"></title>
+        <title th:text="${location.name}"></title>
     </head>
     <body>
-        <p th:text="${country.description}"></p>
-        <img th:src="@{'/image/country/' + ${country.id}}"/>
+        <a th:unless="${type == 'Country'}" th:href="@{'/' + ${parentType} + '/' + ${parentName}}">Назад</a>
+        <p th:text="${location.description}"></p>
+        <img th:src="@{'/image/' + ${type} + '/' + ${location.id}}"/>
     </body>
 </html>

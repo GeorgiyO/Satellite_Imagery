@@ -4,13 +4,13 @@ import java.sql.Blob;
 
 public class Attraction extends Location {
 
-    private int cityId;
+    private City city;
 
-    public int getCityId() {
-        return cityId;
+    public City getCity() {
+        return city;
     }
 
-    public void setCityId(int cityId) {
-        this.cityId = cityId;
+    public void setCity(City city) {
+        this.city = city;
     }
 }

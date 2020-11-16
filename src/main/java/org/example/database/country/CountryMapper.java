@@ -3,7 +3,6 @@ package org.example.database.country;
 import org.example.domain.location.Country;
 import org.springframework.jdbc.core.RowMapper;
 
-import java.sql.Blob;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 

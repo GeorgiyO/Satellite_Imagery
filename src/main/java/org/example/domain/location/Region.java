@@ -4,13 +4,13 @@ import java.sql.Blob;
 
 public class Region extends Location {
 
-    private int countryId;
+    private Country country;
 
-    public int getCountryId() {
-        return countryId;
+    public Country getCountry() {
+        return country;
     }
 
-    public void setCountryId(int countryId) {
-        this.countryId = countryId;
+    public void setCountry(Country country) {
+        this.country = country;
     }
 }

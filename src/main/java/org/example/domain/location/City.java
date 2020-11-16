@@ -1,16 +1,14 @@
 package org.example.domain.location;
 
-import java.sql.Blob;
-
 public class City extends Location {
 
-    private int regionId;
+    private Region region;
 
-    public int getRegionId() {
-        return regionId;
+    public Region getRegion() {
+        return region;
     }
 
-    public void setRegionId(int regionId) {
-        this.regionId = regionId;
+    public void setRegion(Region region) {
+        this.region = region;
     }
 }
