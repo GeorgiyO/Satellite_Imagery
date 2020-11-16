@@ -1,5 +1,8 @@
 package org.example.config;
 
+import org.example.database.attraction.AttractionMapper;
+import org.example.database.attraction.AttractionStorage;
+import org.example.database.attraction.AttractionStorageImp;
 import org.example.database.city.CityMapper;
 import org.example.database.city.CityStorage;
 import org.example.database.city.CityStorageImp;
@@ -52,5 +55,14 @@ public class BeanConfiguration {
     @Bean
     CityMapper cityMapper() {
         return new CityMapper();
+    }
+
+    @Bean
+    AttractionStorage attractionStorage() {
+        return new AttractionStorageImp();
+    }
+    @Bean
+    AttractionMapper attractionMapper() {
+        return new AttractionMapper();
     }
 }

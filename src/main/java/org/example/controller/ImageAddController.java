@@ -1,14 +1,12 @@
 package org.example.controller;
 
+import org.example.database.attraction.AttractionStorage;
 import org.example.database.city.CityStorage;
 import org.example.database.country.CountryStorage;
 import org.example.database.image.ImageStorage;
 import org.example.database.region.RegionStorage;
 import org.example.domain.Image;
-import org.example.domain.location.City;
-import org.example.domain.location.Country;
-import org.example.domain.location.LocationType;
-import org.example.domain.location.Region;
+import org.example.domain.location.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,6 +30,8 @@ public class ImageAddController {
     private RegionStorage regionStorage;
     @Autowired
     private CityStorage cityStorage;
+    @Autowired
+    private AttractionStorage attractionStorage;
 
     @GetMapping
     public String getAddingImageForm(Model model) {
@@ -59,7 +59,7 @@ public class ImageAddController {
             case COUNTRY: return createCountry(name, description);
             case REGION: return createRegion(name, description, parentName);
             case CITY: return createCity(name, description, parentName);
-            case ATTRACTION: return 0;
+            case ATTRACTION: return createAttraction(name, description, parentName);
             default: throw new IllegalStateException("Unexpected value: " + type.toString());
         }
     }
@@ -98,6 +98,19 @@ public class ImageAddController {
         cityStorage.add(city);
 
         return cityStorage.get(name).getId();
+    }
+
+    private int createAttraction(String name, String description, String parentName) {
+        City city = cityStorage.get(parentName);
+
+        Attraction attraction = new Attraction();
+        attraction.setName(name);
+        attraction.setDescription(description);
+        attraction.setCity(city);
+
+        attractionStorage.add(attraction);
+
+        return attractionStorage.get(name).getId();
     }
 
     private void createImage(LocationType locationType, int id, MultipartFile file) throws IOException {

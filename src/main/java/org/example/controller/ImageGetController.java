@@ -1,5 +1,6 @@
 package org.example.controller;
 
+import org.example.database.attraction.AttractionStorage;
 import org.example.database.city.CityStorage;
 import org.example.database.country.CountryStorage;
 import org.example.database.image.ImageStorage;
@@ -33,6 +34,8 @@ public class ImageGetController {
     private RegionStorage regionStorage;
     @Autowired
     private CityStorage cityStorage;
+    @Autowired
+    private AttractionStorage attractionStorage;
 
     @GetMapping(value = "image/{locationType}/{locationId}", produces = MediaType.IMAGE_PNG_VALUE)
     public ResponseEntity<byte[]> getImageByCountry(
@@ -69,6 +72,8 @@ public class ImageGetController {
             case CITY:
                 setCityAttributes(model, name);
                 break;
+            case ATTRACTION:
+                setAttractionAttributes(model, name);
         }
     }
 
@@ -92,5 +97,13 @@ public class ImageGetController {
                 .addAttribute("type", "City")
                 .addAttribute("parentType", "Region")
                 .addAttribute("parentName", city.getRegion().getName());
+    }
+
+    private void setAttractionAttributes(Model model, String name) {
+        Attraction attraction = attractionStorage.get(name);
+        model.addAttribute("location", attraction)
+                .addAttribute("type", "Attraction")
+                .addAttribute("parentType", "City")
+                .addAttribute("parentName", attraction.getCity().getName());
     }
 }
