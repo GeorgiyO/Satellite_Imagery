@@ -51,8 +51,8 @@ public class CityStorageImp implements CityStorage {
 
     @Override
     public void update(City city) {
-        String sqlQuery = "UPDATE City SET name = ?, description = ?, region_id = ?";
-        jdbcTemplate.update(sqlQuery, city.getName(), city.getDescription(), city.getRegion().getId());
+        String sqlQuery = "UPDATE City SET name = ?, description = ?, region_id = ? WHERE id = ?";
+        jdbcTemplate.update(sqlQuery, city.getName(), city.getDescription(), city.getRegion().getId(), city.getId());
     }
 
     @Override

@@ -28,8 +28,8 @@ public class ImageStorageImp implements ImageStorage {
 
     @Override
     public void update(Image image) {
-        String sqlQuery = "UPDATE Image SET location_type = ?, location_id = ?, data = ?";
-        jdbcTemplate.update(sqlQuery, image.getLocationType().toString(), image.getLocationId(), image.getData());
+        delete(image);
+        add(image);
     }
 
     @Override

@@ -20,7 +20,6 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class BeanConfiguration {
-
     @Bean
     ImageStorage imageStorage() {
         return new ImageStorageImp();

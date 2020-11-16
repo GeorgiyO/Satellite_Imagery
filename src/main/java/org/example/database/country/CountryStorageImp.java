@@ -49,8 +49,8 @@ public class CountryStorageImp implements CountryStorage {
 
     @Override
     public void update(Country country) {
-        String sqlQuery = "UPDATE Country SET name = ?, description = ?";
-        jdbcTemplate.update(sqlQuery, country.getName(), country.getDescription());
+        String sqlQuery = "UPDATE Country SET name = ?, description = ? WHERE id = ?";
+        jdbcTemplate.update(sqlQuery, country.getName(), country.getDescription(), country.getId());
     }
 
     @Override

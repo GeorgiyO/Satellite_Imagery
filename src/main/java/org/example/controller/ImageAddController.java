@@ -7,6 +7,7 @@ import org.example.database.image.ImageStorage;
 import org.example.database.region.RegionStorage;
 import org.example.domain.Image;
 import org.example.domain.location.*;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -39,11 +40,11 @@ public class ImageAddController {
     }
 
     @PostMapping
-    public String addImage(@RequestParam("type") String locationType,
-                           @RequestParam("parentName") String parentName,
-                           @RequestParam("name") String name,
-                           @RequestParam("description") String description,
-                           @RequestParam("image") MultipartFile file
+    public String addImageReq(@RequestParam("type") String locationType,
+                              @RequestParam("parentName") String parentName,
+                              @RequestParam("name") String name,
+                              @RequestParam("description") String description,
+                              @RequestParam("image") MultipartFile file
     ) throws IOException {
 
         LocationType type = LocationType.fromString(locationType);

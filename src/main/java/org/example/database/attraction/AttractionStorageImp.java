@@ -51,8 +51,8 @@ public class AttractionStorageImp implements AttractionStorage {
 
     @Override
     public void update(Attraction attraction) {
-        String sqlQuery = "UPDATE Attraction SET name = ?, description = ?, city_id = ?";
-        jdbcTemplate.update(sqlQuery, attraction.getName(), attraction.getDescription(), attraction.getCity().getId());
+        String sqlQuery = "UPDATE Attraction SET name = ?, description = ?, city_id = ? WHERE id = ?";
+        jdbcTemplate.update(sqlQuery, attraction.getName(), attraction.getDescription(), attraction.getCity().getId(), attraction.getId());
     }
 
     @Override

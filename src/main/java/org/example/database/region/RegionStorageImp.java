@@ -54,8 +54,8 @@ public class RegionStorageImp implements RegionStorage {
 
     @Override
     public void update(Region region) {
-        String sqlQuery = "UPDATE Region SET name = ?, description = ?, country_id = ?";
-        jdbcTemplate.update(sqlQuery, region.getName(), region.getDescription(), region.getCountry().getId());
+        String sqlQuery = "UPDATE Region SET name = ?, description = ?, country_id = ? WHERE id = ?";
+        jdbcTemplate.update(sqlQuery, region.getName(), region.getDescription(), region.getCountry().getId(), region.getId());
     }
 
     @Override
