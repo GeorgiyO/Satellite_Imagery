@@ -1,5 +1,8 @@
 package org.example.config;
 
+import org.example.database.city.CityMapper;
+import org.example.database.city.CityStorage;
+import org.example.database.city.CityStorageImp;
 import org.example.database.country.CountryMapper;
 import org.example.database.country.CountryStorage;
 import org.example.database.country.CountryStorageImp;
@@ -9,8 +12,6 @@ import org.example.database.image.ImageStorageImp;
 import org.example.database.region.RegionMapper;
 import org.example.database.region.RegionStorage;
 import org.example.database.region.RegionStorageImp;
-import org.example.database.user.MySQLUserStorage;
-import org.example.database.user.UserStorage;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -42,5 +43,14 @@ public class BeanConfiguration {
     @Bean
     RegionMapper regionMapper() {
         return new RegionMapper();
+    }
+
+    @Bean
+    CityStorage cityStorage() {
+        return new CityStorageImp();
+    }
+    @Bean
+    CityMapper cityMapper() {
+        return new CityMapper();
     }
 }

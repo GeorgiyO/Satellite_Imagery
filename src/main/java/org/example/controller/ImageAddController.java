@@ -1,9 +1,11 @@
 package org.example.controller;
 
+import org.example.database.city.CityStorage;
 import org.example.database.country.CountryStorage;
 import org.example.database.image.ImageStorage;
 import org.example.database.region.RegionStorage;
 import org.example.domain.Image;
+import org.example.domain.location.City;
 import org.example.domain.location.Country;
 import org.example.domain.location.LocationType;
 import org.example.domain.location.Region;
@@ -28,6 +30,8 @@ public class ImageAddController {
     private CountryStorage countryStorage;
     @Autowired
     private RegionStorage regionStorage;
+    @Autowired
+    private CityStorage cityStorage;
 
     @GetMapping
     public String getAddingImageForm(Model model) {
@@ -54,7 +58,7 @@ public class ImageAddController {
         switch (type) {
             case COUNTRY: return createCountry(name, description);
             case REGION: return createRegion(name, description, parentName);
-            case CITY: return 0;
+            case CITY: return createCity(name, description, parentName);
             case ATTRACTION: return 0;
             default: throw new IllegalStateException("Unexpected value: " + type.toString());
         }
@@ -67,8 +71,7 @@ public class ImageAddController {
 
         countryStorage.add(country);
 
-        country = countryStorage.get(name);
-        return country.getId();
+        return countryStorage.get(name).getId();
     }
 
     private int createRegion(String name, String description, String parentName) {
@@ -81,8 +84,20 @@ public class ImageAddController {
 
         regionStorage.add(region);
 
-        region = regionStorage.get(name);
-        return region.getId();
+        return regionStorage.get(name).getId();
+    }
+
+    private int createCity(String name, String description, String parentName) {
+        Region region = regionStorage.get(parentName);
+
+        City city = new City();
+        city.setName(name);
+        city.setDescription(description);
+        city.setRegion(region);
+
+        cityStorage.add(city);
+
+        return cityStorage.get(name).getId();
     }
 
     private void createImage(LocationType locationType, int id, MultipartFile file) throws IOException {
@@ -92,4 +107,5 @@ public class ImageAddController {
         image.setData(file.getBytes());
         imageStorage.add(image);
     }
+
 }

@@ -1,13 +1,11 @@
 package org.example.controller;
 
+import org.example.database.city.CityStorage;
 import org.example.database.country.CountryStorage;
 import org.example.database.image.ImageStorage;
 import org.example.database.region.RegionStorage;
 import org.example.domain.Image;
-import org.example.domain.location.Country;
-import org.example.domain.location.Location;
-import org.example.domain.location.LocationType;
-import org.example.domain.location.Region;
+import org.example.domain.location.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -33,6 +31,8 @@ public class ImageGetController {
     private CountryStorage countryStorage;
     @Autowired
     private RegionStorage regionStorage;
+    @Autowired
+    private CityStorage cityStorage;
 
     @GetMapping(value = "image/{locationType}/{locationId}", produces = MediaType.IMAGE_PNG_VALUE)
     public ResponseEntity<byte[]> getImageByCountry(
@@ -66,6 +66,9 @@ public class ImageGetController {
             case REGION:
                 setRegionAttributes(model, name);
                 break;
+            case CITY:
+                setCityAttributes(model, name);
+                break;
         }
     }
 
@@ -81,5 +84,13 @@ public class ImageGetController {
                 .addAttribute("type", "Region")
                 .addAttribute("parentType", "Country")
                 .addAttribute("parentName", region.getCountry().getName());
+    }
+
+    private void setCityAttributes(Model model, String name) {
+        City city = cityStorage.get(name);
+        model.addAttribute("location", city)
+                .addAttribute("type", "City")
+                .addAttribute("parentType", "Region")
+                .addAttribute("parentName", city.getRegion().getName());
     }
 }
