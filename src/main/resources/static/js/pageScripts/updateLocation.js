@@ -7,30 +7,36 @@ let ajax = new Ajax();
 
 init();
 
-window.PageAddLocation = addLocation;
+window.PageUpdateLocation = updateLocation;
 
 function init() {
     ajax.setMethod("POST")
-        .setUrl("/moderator/image/add")
+        .setUrl("/moderator/image/update")
         .setOnError(onError)
         .setOnSucceed(onSucceed);
 }
 
-function addLocation() {
+function updateLocation() {
     let type = document.querySelector("meta[name=locationType]").content;
-    let parentName = document.querySelector("meta[name=parentName").content;
-    let name = document.getElementById("name").value;
+    let name = document.querySelector("meta[name=oldName").content;
+    let parentName = document.getElementById("parentName").value;
+    let newName = document.getElementById("newName").value;
     let description = document.getElementById("description").value;;
     let image = document.getElementById("image").files[0];
 
     let formData = new FormData();
 
-    formData.append("type", type)
-    formData.append("parentName", parentName)
-    formData.append("name", name)
-    formData.append("description", description)
-    formData.append("image", image)
-
+    formData.append("type", type);
+    formData.append("name", name);
+    formData.append("parentName", parentName);
+    formData.append("newName", newName);
+    formData.append("description", description);
+    
+    if (image != undefined) {
+        formData.append("image", image);
+    } else {
+        formData.append("image", new Blob());
+    }
     ajax.setMessage(formData)
         .execute();
 }

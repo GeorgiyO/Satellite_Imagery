@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Nekogochan</title>
+        <th:block th:replace="fragment/head.html :: head"></th:block>
+    </head>
+    <body>
+        <div class="wrapper">
+            <div id="navDiv" th:insert="fragment/nav.html :: nav"></div>
+            <div id="content">
+                <th:block th:fragment="content">
+                    <meta name="locationType" th:content="${locationType}">
+                    <meta name="oldName" th:content="${oldName}">
+                    <main>
+
+                        <section class="form">
+
+                            <p>Имя родительской локации:</p>
+                            <div class="input-container">
+                                <input class="effect-1" type="text" placeholder="Новое имя родительской локации" id="parentName">
+                                <span class="focus-border"></span>
+                            </div>
+                            <span id="login-span" class="error"></span>
+
+                            <p>Новое название (ссылка):</p>
+                            <div class="input-container">
+                                <input class="effect-1" type="text" placeholder="Новое название (ссылка)" id="newName">
+                                <span class="focus-border"></span>
+                            </div>
+                            <span id="login-span" class="error"></span>
+
+                            <p>Описание:</p>
+                            <div class="input-container">
+                                <input class="effect-1" type="text" placeholder="Описание" id="description">
+                                <span class="focus-border"></span>
+                            </div>
+                            <span id="login-span" class="error"></span>
+
+                            <p>Изображение:</p>
+                            <div class="input-container">
+                                <input type="file" placeholder="Image" accept="image/png" id="image">
+                                <span class="focus-border"></span>
+                            </div>
+                            <span id="login-span" class="error"></span>
+
+                            <hr>
+                            
+                            <button class="fill pulse" onclick="window.PageUpdateLocation()">send data</button>
+                        </section>
+
+                    </main>
+                    <script type="module" src="/js/pageScripts/UpdateLocation.js"></script>
+                    <script>
+                        window.CurrentPage = {};
+                    </script>
+                </th:block>
+            </div>
+            <div th:insert="fragment/loading.html :: loading" id="pageLoading" class="hide"></div>
+        </div>
+        <th:block th:insert="fragment/footer.html :: footer"></th:block>
+        <th:block th:insert="fragment/scripts.html :: scripts"></th:block>
+    </body>
+</html>

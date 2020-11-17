@@ -38,6 +38,7 @@ public class ImageUpdateController {
     }
 
     @PostMapping
+    @ResponseBody
     public String updateImageReq(@RequestParam("type") String locationType,
                                  @RequestParam("name") String name,
                                  @RequestParam("parentName") String parentName,
