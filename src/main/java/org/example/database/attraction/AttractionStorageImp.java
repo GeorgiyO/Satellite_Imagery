@@ -44,6 +44,12 @@ public class AttractionStorageImp implements AttractionStorage {
     }
 
     @Override
+    public List<Attraction> getList(int parentId) {
+        String sqlQuery = "SELECT * FROM Attraction WHERE city_id = ?";
+        return jdbcTemplate.query(sqlQuery, context.getBean(AttractionMapper.class), parentId);
+    }
+
+    @Override
     public void add(Attraction attraction) {
         String sqlQuery = "INSERT INTO Attraction (name, description, city_id) VALUES (?, ?, ?)";
         jdbcTemplate.update(sqlQuery, attraction.getName(), attraction.getDescription(), attraction.getCity().getId());

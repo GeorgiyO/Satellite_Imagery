@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import java.util.List;
+
 public class CountryStorageImp implements CountryStorage {
 
     @Autowired
@@ -39,6 +41,12 @@ public class CountryStorageImp implements CountryStorage {
         country = jdbcTemplate.query(sqlQuery, context.getBean(CountryMapper.class), name).get(0);
 
         return country;
+    }
+
+    @Override
+    public List<Country> getList() {
+        String sqlQuery = "SELECT * FROM Country";
+        return jdbcTemplate.query(sqlQuery, context.getBean(CountryMapper.class));
     }
 
     @Override

@@ -44,6 +44,12 @@ public class CityStorageImp implements CityStorage {
     }
 
     @Override
+    public List<City> getList(int parentId) {
+        String sqlQuery = "SELECT * FROM City WHERE region_id = ?";
+        return jdbcTemplate.query(sqlQuery, context.getBean(CityMapper.class), parentId);
+    }
+
+    @Override
     public void add(City city) {
         String sqlQuery = "INSERT INTO City (name, description, region_id) VALUES (?, ?, ?)";
         jdbcTemplate.update(sqlQuery, city.getName(), city.getDescription(), city.getRegion().getId());

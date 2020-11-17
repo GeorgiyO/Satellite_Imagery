@@ -8,10 +8,6 @@ import org.example.domain.location.Region;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
-
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
 
 public class RegionStorageImp implements RegionStorage {
@@ -44,6 +40,12 @@ public class RegionStorageImp implements RegionStorage {
         region = jdbcTemplate.query(sqlQuery, context.getBean(RegionMapper.class), name).get(0);
 
         return region;
+    }
+
+    @Override
+    public List<Region> getList(int parentId) {
+        String sqlQuery = "SELECT * FROM Region WHERE country_id = ?";
+        return jdbcTemplate.query(sqlQuery, context.getBean(RegionMapper.class), parentId);
     }
 
     @Override
