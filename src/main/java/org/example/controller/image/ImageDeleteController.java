@@ -1,4 +1,4 @@
-package org.example.controller;
+package org.example.controller.image;
 
 import org.example.database.attraction.AttractionStorage;
 import org.example.database.city.CityStorage;

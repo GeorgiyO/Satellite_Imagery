@@ -1,4 +1,4 @@
-package org.example.controller;
+package org.example.controller.image;
 
 import org.example.database.attraction.AttractionStorage;
 import org.example.database.city.CityStorage;
@@ -66,7 +66,7 @@ public class ImageUpdateController {
             case REGION: return updateRegion(name, newName, description, parentName);
             case CITY: return updateCity(name, newName, description, parentName);
             case ATTRACTION: return updateAttraction(name, newName, description, parentName);
-            default: throw new IllegalStateException("Unexpected value: " + type.toString());
+            default: throw new IllegalStateException("Unexpected value: " + type);
         }
     }
 

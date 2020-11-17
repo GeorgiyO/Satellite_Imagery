@@ -1,24 +1,52 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
     <head>
-        <meta charset="utf-8">
-        <title>Test</title>
+        <title>Nekogochan</title>
+        <th:block th:replace="fragment/head.html :: head"></th:block>
     </head>
     <body>
         <div class="wrapper">
+            <div id="navDiv" th:insert="fragment/nav.html :: nav"></div>
             <div id="content">
-                <header>
-                    <h1>Спутниковые снимки</h1>
-                    <p>Чтобы просматривать фотографии со спутников, вам необходимо авторизоваться:</p>
+                <th:block th:fragment="content">
 
-                </header>
-                <main>
-                    <h2>Ссылки для тестов (автоматом перейдешь на добавленную фотку, проверка корректности введеных значений еще не реализована)</h2>
-                    <a href="/moderator/image/add">Добавить фотку</a><br>
-                    <a href="/moderator/image/update">Редактировать фотку</a><br>
-                    <a href="/moderator/image/delete">Удалить фотку</a>
-                </main>
-            </div>      
+                    <header>
+                        <h1>Спутниковые снимки</h1>
+                        <p>Снимки стран, регионов, городов, достопримечательностей</p>
+                    </header>
+
+                    <main>
+
+                        <!--Если не залогинен-->
+                        <section class="center-content">
+                            <h2>Чтобы просматривать фотографии необходимо войти в систему:</h2>
+                            <a class="ajaxLink" href="#1"><button class="fill pulse">Зарегестрироваться</button></a>
+                            <a class="ajaxLink" href="#1"><button class="fill pulse">Войти в систему</button></a>
+                        </section>
+
+                        <section>
+                            <p>
+                                Защищенное клиент-серверного приложения хранения спутниковых снимков, взаимодействующее с базой данных, 
+                                разработанной в соответствии с требованиями законодательства Российской Федерации, требованиями нормативно-правовой 
+                                документации и требованиями Заказчика (кафедры «Информационная безопасность» Рязанского государственного радиотехнического 
+                                университета имени В.Ф. Уткина).
+                            </p>
+                        </section>
+                        <section id="countries">
+                            <!--Здесь находится список стран-->
+                        </section>
+
+                        <script type="module" src="/js/pageScripts/index.js"></script>
+                        <script>
+                            window.CurrentPage = {};
+                            window.PageOnLoadIndex();
+                        </script>
+                    </main>
+                </th:block>
+            </div>
+            <div th:insert="fragment/loading.html :: loading" id="pageLoading" class="hide"></div>
         </div>
+        <th:block th:insert="fragment/footer.html :: footer"></th:block>
+        <th:block th:insert="fragment/scripts.html :: scripts"></th:block>
     </body>
 </html>

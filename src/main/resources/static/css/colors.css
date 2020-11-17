@@ -1,0 +1,70 @@
+
+/* 
+ * hsl:
+ * h - hue (color)
+ * s - saturation
+ * l - lightness
+ * hsl(h, s, l);
+ */
+
+:root {
+    --bc1: 193; /*Base Color 1 - blue*/
+    --bc2: 217; /*Base Color 2 - dark-blue*/
+    --bc-avg: calc((var(--bc1) + var(--bc2)) / 2);
+
+    --a-color: hsl(var(--bc2), 60%, 30%);
+    --a-hover-color: hsl(var(--bc2), 60%, 20%);
+    --a-active-color: hsl(var(--bc2), 60%, 10%);
+}
+
+:root body {
+    --text-color: black;
+    --background-color: white;
+    --bg-grd-color-1: hsl(var(--bc1), 100%, 50%);
+    --bg-grd-color-2: hsl(var(--bc2), 100%, 50%);
+    --logo-opacity: 0.2;
+    --grd-opacity: 0.2;
+}
+
+:root nav {
+    --a-color: hsl(var(--bc1), 100%, 70%);
+    --a-hover-color: hsl(var(--bc1), 100%, 85%);
+    --a-active-color: white;
+    --background-color: #00000088;
+}
+
+:root footer {
+    --text-color: #ddd;
+    --a-hover-color: white;
+    --background-color: #00000088;
+}
+
+:root .login-form {
+    --background-color: #00000088;
+    --border-color: black;
+}
+
+:root input {
+    --background-color: #13192c;
+    --text-color: hsl(var(--bc-avg), 80%, 40%);
+}
+
+:root .effect-1~.focus-border {
+    --underline-color: hsl(var(--bc-avg), 80%, 40%);
+}
+
+:root button {
+    --background-color: #00000088;
+    --text-border-color: white;
+    --fill-hover-text-border-color: black;
+    --fill-color: hsla(var(--bc-avg), 100%, 80%, 80%);
+    --pulse-color: hsla(var(--bc-avg), 100%, 80%, 80%);
+}
+
+:root .loading-place {
+    --background-color: #00000088;
+}
+
+:root .lds-default {
+    --dot-color: hsl(var(--bc-avg), 100%, 15%);
+}

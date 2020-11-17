@@ -1,0 +1,45 @@
+footer {
+    box-shadow: 3px 0 7px rgba(0,0,0,.3);
+    padding: 1rem 10% 0;
+    height: 3rem;
+
+    color: var(--text-color);
+    background-color: var(--background-color); /*same background that in nav*/
+}
+
+footer > p {
+    display: inline;
+}
+
+footer > ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    padding-right: 1rem;
+    float: right;
+    height: 100%;
+}
+
+footer > ul > li {
+    float: right;
+    display: inline-block;
+    height: 100%;
+    padding: 0;
+    margin: 0 1rem;
+    text-align: center;
+}
+
+footer ul li a {
+    text-decoration: none;
+    color: var(--text-color);
+}
+
+footer ul li a:hover {
+    color: var(--a-hover-color);
+}
+
+/* sticky footer */
+
+.wrapper {
+    min-height: calc(100vh - 4rem);
+}

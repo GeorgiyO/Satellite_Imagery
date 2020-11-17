@@ -1,0 +1,50 @@
+section {
+    padding: 1.5rem 20%;
+}
+
+section .description {
+    width: 44rem;
+    margin: auto;
+}
+
+.center-content {
+    justify-content: center;
+    text-align: center;
+}
+
+#content {
+    transition-property: opacity, transform;
+    transition-duration: 0.3s;
+    transition-timing-function: linear;
+}
+
+.hide {
+    opacity: 0;
+}
+
+.fromMiddleToDown {
+    animation: fromMiddleToDown 0.3s cubic-bezier(0.88, 0.01, 1, 1);
+}
+
+@keyframes
+fromMiddleToDown {
+    0% {
+        transform: translateY(0);
+    } 100% {
+        transform: translateY(40px);
+    }
+}
+
+
+.fromUpToMiddle {
+    animation: fromUpToMiddle 0.3s cubic-bezier(0,0,.12,.99);
+}
+
+@keyframes
+fromUpToMiddle {
+    0% {
+        transform: translateY(-40px);
+    } 100% {
+        transform: translateY(0);
+    }
+}
