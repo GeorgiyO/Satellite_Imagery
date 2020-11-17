@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Nekogochan</title>
+        <th:block th:replace="fragment/head.html :: head"></th:block>
+    </head>
+    <body>
+        <div class="wrapper">
+            <div id="navDiv" th:insert="fragment/nav.html :: nav"></div>
+            <div id="content">
+                <th:block th:fragment="content">
+                    <meta name="type" th:content="${type}">
+                    <meta name="name" th:content="${name}">
+                    <main>
+
+                        <section class="form">
+
+                            <h2>Удалить локацию?</h2>
+
+                            <button class="fill pulse" onclick="window.PageDeleteLocation()">Удалить</button>
+                            <a class="ajaxLink" th:href="@{'/Photo/' + ${type} + '/' + ${name}}"><button class="fill pulse">Отмена</button></a>
+                        </section>
+
+                    </main>
+                    <script type="module" src="/js/pageScripts/deleteLocation.js"></script>
+                    <script>
+                        window.CurrentPage = {};
+                    </script>
+                </th:block>
+            </div>
+            <div th:insert="fragment/loading.html :: loading" id="pageLoading" class="hide"></div>
+        </div>
+        <th:block th:insert="fragment/footer.html :: footer"></th:block>
+        <th:block th:insert="fragment/scripts.html :: scripts"></th:block>
+    </body>
+</html>

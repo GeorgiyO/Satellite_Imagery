@@ -7,7 +7,7 @@ let ajax = new Ajax();
 
 init();
 
-window.PageUpdateLocation = updateLocation;
+window.PageUpdateLocation = updateRequest;
 
 function init() {
     ajax.setMethod("POST")
@@ -16,7 +16,7 @@ function init() {
         .setOnSucceed(onSucceed);
 }
 
-function updateLocation() {
+function updateRequest() {
     let type = document.querySelector("meta[name=locationType]").content;
     let name = document.querySelector("meta[name=oldName").content;
     let parentName = document.getElementById("parentName").value;
