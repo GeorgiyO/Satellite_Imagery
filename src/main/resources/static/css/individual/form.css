@@ -1,0 +1,18 @@
+.form {
+    padding: 2rem;
+
+    width: 50rem;
+    margin: 3rem auto;
+
+    background-color: var(--background-color);
+    border: solid 2px var(--border-color);
+}
+
+.form > span {
+    font-size: 0.8rem;
+    color: red;
+}
+
+.form > .button-container {
+    margin-top: 3rem;
+}

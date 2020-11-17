@@ -20,6 +20,13 @@
                             <a class="ajaxLink" href="#1"><button class="fill pulse">Войти в систему</button></a>
                         </section>
 
+                        <!--Если модератор-->
+                        <section id="editLinks">
+                            <a class="ajaxLink" th:href="@{'/moderator/image/update/' + ${locationType} + '/' + ${locationName}}">Редактировать</a>
+                            <a class="ajaxLink" th:href="@{'/moderator/image/delete/' + ${locationType} + '/' + ${locationName}}">Удалить</a>
+                            <!--еще одна ссылка для добавление подобласти, добавляется через скрипт-->
+                        </section>
+
                         <!--Если залогинен-->
                         <section id="location">
                             <!--ссылка на родителя + заголовок (описание) + фотография + ссылки на детей-->

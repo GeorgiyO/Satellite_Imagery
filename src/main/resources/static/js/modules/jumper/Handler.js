@@ -1,4 +1,4 @@
-import {setUpLinks} from "./Linker.js";
+import {setUpLinks} from "/js/modules/jumper/Linker.js";
 
 export {isBlocked, setDiv, setData, start, tryShow};
 
@@ -83,6 +83,8 @@ function processAjaxTransition() {
     }, title, href);
 
     data = title = null;
+
+    setUpLinks(document.querySelectorAll("#content .ajaxLink"));
 }
 
 function executePageScripts() {

@@ -1,5 +1,5 @@
 export function getErrorPage(error) {
-    return
+    let content =
 `
 <main>
     <section>
@@ -12,5 +12,6 @@ export function getErrorPage(error) {
         </a>
     </section>
 </main>
-`
+`;
+    return content;
 }

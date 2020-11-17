@@ -11,16 +11,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
 @Controller
-@RequestMapping("moderator/image/add")
+@RequestMapping("/moderator/image/add")
 public class ImageAddController {
 
     @Autowired
@@ -34,12 +31,8 @@ public class ImageAddController {
     @Autowired
     private AttractionStorage attractionStorage;
 
-    @GetMapping
-    public String getAddingImageForm(Model model) {
-        return "addImageTemplate";
-    }
-
     @PostMapping
+    @ResponseBody
     public String addImageReq(@RequestParam("type") String locationType,
                               @RequestParam("parentName") String parentName,
                               @RequestParam("name") String name,
@@ -47,12 +40,14 @@ public class ImageAddController {
                               @RequestParam("image") MultipartFile file
     ) throws IOException {
 
+        LoggerFactory.getLogger(this.getClass()).info(locationType + " " + parentName + " " + name + " " + description + " " + file.getSize());
+
         LocationType type = LocationType.fromString(locationType);
 
         int id = createLocation(type, name, description, parentName);
         createImage(type, id, file);
 
-        return "redirect:/" + locationType + "/" + name;
+        return "redirect:/Photo/" + locationType + "/" + name;
     }
 
     private int createLocation(LocationType type, String name, String description, String parentName) {

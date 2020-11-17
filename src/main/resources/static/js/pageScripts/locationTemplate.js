@@ -1,5 +1,6 @@
 import {Ajax} from "/js/modules/Ajax.js";
 import {setUpLinks} from "/js/modules/jumper/Linker.js";
+import * as ladder from "/js/modules/ladder.js";
 
 console.log("execute location template init script");
 
@@ -51,10 +52,11 @@ function setLocation(_location) {
     appendHeader();
     appendPhoto();
     appendChildHrefs();
+    appendAddChildLink();
 }
 
 function appendParent() {
-    let parentType = getParentType(type);
+    let parentType = ladder.getParentType(type);
 
     parentHrefDiv = document.createElement("div");
     parentHrefDiv.id = "parentHref";
@@ -89,7 +91,7 @@ function appendPhoto() {
 }
 
 function appendChildHrefs() {
-    let childType = getChildType(type);
+    let childType = ladder.getChildType(type);
 
     if (childType != null) {
 
@@ -110,31 +112,27 @@ function pushChildList(children) {
 
 function pushChild(child) {
     let a = document.createElement("a");
-    a.setAttribute("href", "/Photo/" + getChildType(type) + "/" + child.name);
+    a.setAttribute("href", "/Photo/" + ladder.getChildType(type) + "/" + child.name);
     a.classList.add("ajaxLink");
     a.innerText = child.name;
     childrenDiv.appendChild(a);
     childrenDiv.appendChild(document.createElement("br"));
 }
 
-function getParentType(type) {
-    switch (type) {
-        case "country": return null;
-        case "region": return "country";
-        case "city": return "region";
-        case "attraction": return "city";
-    }
-}
-
-function getChildType(type) {
-    switch (type) {
-        case "country": return "region";
-        case "region": return "city";
-        case "city": return "attraction";
-        case "attraction": return null;
-    }
-}
-
 function onError(code) {
     console.log("error: " + code);
+}
+
+function appendAddChildLink() {
+    let editLinksDiv = document.getElementById("editLinks");
+    let childType = ladder.getChildType(type);
+
+    if (editLinksDiv != null && childType != null) {
+        let a = document.createElement("a");
+        a.setAttribute("href", "/moderator/image/add/" + childType + "/" + location.name);
+        a.innerText = "Добавить"
+        a.classList.add("ajaxLink");
+        editLinksDiv.appendChild(a);
+        setUpLinks([a]);
+    }
 }

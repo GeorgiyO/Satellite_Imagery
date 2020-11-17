@@ -45,12 +45,12 @@
 }
 
 :root input {
-    --background-color: #13192c;
-    --text-color: hsl(var(--bc-avg), 80%, 40%);
+    --background-color: #d3d6e6;
+    --text-color: hsl(var(--bc-avg), 80%, 30%);
 }
 
 :root .effect-1~.focus-border {
-    --underline-color: hsl(var(--bc-avg), 80%, 40%);
+    --underline-color: hsl(var(--bc-avg), 80%, 30%);
 }
 
 :root button {
