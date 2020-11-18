@@ -6,12 +6,18 @@ let ajax = new Ajax();
 init();
 
 window.PageDeleteLocation = deleteRequest;
+window.PageOnLoadDeleteLocation = setHeader;
 
 function init() {
     ajax.setMethod("POST")
         .setUrl("/moderator/image/delete")
         .setOnError(onError)
         .setOnSucceed(onSucceed);
+    setHeader();
+}
+
+function setHeader() {
+    document.getElementById("form-header").innerText = "Удалить локацию типа " + document.querySelector("meta[name=type]").content + " с именем " +  document.querySelector("meta[name=name").content + "?";
 }
 
 function deleteRequest() {

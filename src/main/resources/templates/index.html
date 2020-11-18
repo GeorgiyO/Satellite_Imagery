@@ -20,8 +20,8 @@
                         <!--Если не залогинен-->
                         <section class="center-content">
                             <h2>Чтобы просматривать фотографии необходимо войти в систему:</h2>
-                            <a class="" href="#1"><button class="fill pulse">Зарегестрироваться</button></a>
-                            <a class="" href="#1"><button class="fill pulse">Войти в систему</button></a>
+                            <a class="" href="#1"><button class="fill">Зарегестрироваться</button></a>
+                            <a class="" href="#1"><button class="fill">Войти в систему</button></a>
                         </section>
 
                         <section>
@@ -35,7 +35,9 @@
 
                         <!--Если модератор-->
                         <section>
-                            <a th:href="@{/moderator/image/add/country/*}" class="ajaxLink">Добавить страну</a>
+                            <a th:href="@{/moderator/image/add/country/*}" class="ajaxLink">
+                                <button class="fill">Добавить страну</button>
+                            </a>
                         </section>
 
                         <section id="countries">

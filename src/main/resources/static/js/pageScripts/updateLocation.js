@@ -9,12 +9,19 @@ let ajax = new Ajax();
 init();
 
 window.PageUpdateLocation = updateRequest;
+window.PageOnLoadUpdateLocation = setHeader();
 
 function init() {
     ajax.setMethod("POST")
         .setUrl("/moderator/image/update")
         .setOnError(onError)
         .setOnSucceed(onSucceed);
+    setHeader();
+}
+
+function setHeader() {
+    let headerText = "Редактировать локацию типа " + document.querySelector("meta[name=locationType]").content + " с именем " + document.querySelector("meta[name=oldName").content;
+    document.getElementById("form-header").innerText = headerText;
 }
 
 function updateRequest() {

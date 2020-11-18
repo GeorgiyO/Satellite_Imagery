@@ -12,9 +12,9 @@
     --bc2: 217; /*Base Color 2 - dark-blue*/
     --bc-avg: calc((var(--bc1) + var(--bc2)) / 2);
 
-    --a-color: hsl(var(--bc2), 60%, 30%);
-    --a-hover-color: hsl(var(--bc2), 60%, 20%);
-    --a-active-color: hsl(var(--bc2), 60%, 10%);
+    --a-color: hsl(var(--bc2), 30%, 30%);
+    --a-hover-color: hsl(var(--bc2), 30%, 20%);
+    --a-active-color: hsl(var(--bc2), 30%, 10%);
 }
 
 :root body {

@@ -14,6 +14,9 @@
                     <main>
 
                         <section class="form">
+
+                            <h3 id="form-header"></h3>
+
                             <p>Название (ссылка):</p>
                             <div class="input-container">
                                 <input class="effect-1" type="text" placeholder="Название (ссылка)" id="name">
@@ -37,13 +40,14 @@
 
                             <hr>
                             
-                            <button class="fill pulse" onclick="window.PageAddLocation()">send data</button>
+                            <button class="fill" onclick="window.PageAddLocation()">send data</button>
                         </section>
 
                     </main>
                     <script type="module" src="/js/pageScripts/addLocation.js"></script>
                     <script>
                         window.CurrentPage = {};
+                        window.PageOnLoadAddLocation();
                     </script>
                 </th:block>
             </div>

@@ -15,16 +15,17 @@
 
                         <section class="form">
 
-                            <h2>Удалить локацию?</h2>
+                            <h2 id="form-header"></h2>
 
-                            <button class="fill pulse" onclick="window.PageDeleteLocation()">Удалить</button>
-                            <a class="ajaxLink" th:href="@{'/Photo/' + ${type} + '/' + ${name}}"><button class="fill pulse">Отмена</button></a>
+                            <button class="fill" onclick="window.PageDeleteLocation()">Удалить</button>
+                            <a class="ajaxLink" th:href="@{'/Photo/' + ${type} + '/' + ${name}}"><button class="fill">Отмена</button></a>
                         </section>
 
                     </main>
                     <script type="module" src="/js/pageScripts/deleteLocation.js"></script>
                     <script>
                         window.CurrentPage = {};
+                        window.PageOnLoadDeleteLocation();
                     </script>
                 </th:block>
             </div>

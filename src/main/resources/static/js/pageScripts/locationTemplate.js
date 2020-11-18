@@ -66,13 +66,18 @@ function appendParent() {
     let a = document.createElement("a");
     a.classList.add("ajaxLink");
 
+    let button = document.createElement("button");
+    button.classList.add("fill");
+
     if (parentType != null) {
         a.setAttribute("href", "/Photo/" + parentType + "/" + location[parentType].name);
-        a.innerText = location[parentType].name;
+        button.innerText = location[parentType].name;
     } else {
         a.setAttribute("href", "/");
-        a.innerText = "Вернуться на главную";
+        button.innerText = "Вернуться на главную";
     }
+
+    a.appendChild(button);
 
     locationSection.appendChild(parentHrefDiv);
     parentHrefDiv.appendChild(a);
@@ -108,6 +113,11 @@ function appendChildHrefs() {
 }
 
 function pushChildList(children) {
+
+    let h3 = document.createElement("h3");
+    h3.innerText = "Подобласти:";
+    childrenDiv.appendChild(h3);
+
     children.forEach(pushChild);
     setUpLinks(document.querySelectorAll("#childrenHref .ajaxLink"));
 }
@@ -118,7 +128,6 @@ function pushChild(child) {
     a.classList.add("ajaxLink");
     a.innerText = child.name;
     childrenDiv.appendChild(a);
-    childrenDiv.appendChild(document.createElement("br"));
 }
 
 function appendAddChildLink() {
@@ -128,8 +137,14 @@ function appendAddChildLink() {
     if (editLinksDiv != null && childType != null) {
         let a = document.createElement("a");
         a.setAttribute("href", "/moderator/image/add/" + childType + "/" + location.name);
-        a.innerText = "Добавить"
         a.classList.add("ajaxLink");
+
+        let button = document.createElement("button");
+        button.classList.add("fill");
+        button.innerText = "Добавить подобласть";
+
+        a.appendChild(button);
+
         editLinksDiv.appendChild(a);
         setUpLinks([a]);
     }

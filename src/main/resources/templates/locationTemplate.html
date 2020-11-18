@@ -16,14 +16,14 @@
                         <!--Если не залогинен-->
                         <section class="center-content">
                             <h2>Чтобы просматривать фотографии необходимо войти в систему:</h2>
-                            <a class="ajaxLink" href="#1"><button class="fill pulse">Зарегестрироваться</button></a>
-                            <a class="ajaxLink" href="#1"><button class="fill pulse">Войти в систему</button></a>
+                            <a class="ajaxLink" href="#1"><button class="fill">Зарегестрироваться</button></a>
+                            <a class="ajaxLink" href="#1"><button class="fill">Войти в систему</button></a>
                         </section>
 
                         <!--Если модератор-->
                         <section id="editLinks">
-                            <a class="ajaxLink" th:href="@{'/moderator/image/update/' + ${locationType} + '/' + ${locationName}}">Редактировать</a>
-                            <a class="ajaxLink" th:href="@{'/moderator/image/delete/' + ${locationType} + '/' + ${locationName}}">Удалить</a>
+                            <a class="ajaxLink" th:href="@{'/moderator/image/update/' + ${locationType} + '/' + ${locationName}}"><button class="fill">Редактировать</button></a>
+                            <a class="ajaxLink" th:href="@{'/moderator/image/delete/' + ${locationType} + '/' + ${locationName}}"><button class="fill">Удалить</button></a>
                             <!--еще одна ссылка для добавление подобласти, добавляется через скрипт-->
                         </section>
 

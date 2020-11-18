@@ -1,0 +1,39 @@
+
+/*
+#location
+#location > #parentHref
+#location > p
+#location > img
+#location > #childrenHref
+*/
+
+#location {
+    
+}
+
+#editLinks {
+    font-size: 0.75em;
+}
+
+#parentHref {
+    
+}
+
+#location > p {
+
+}
+
+#location > img {
+    width: 100%;
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+#childrenHref a {
+    display: block;
+    margin: 10px;
+}
+
+#childrenHref a:hover {
+    background-color: #00205044;
+}

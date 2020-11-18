@@ -8,12 +8,25 @@ let ajax = new Ajax();
 init();
 
 window.PageAddLocation = addLocation;
+window.PageOnLoadAddLocation = setHeader;
 
 function init() {
     ajax.setMethod("POST")
         .setUrl("/moderator/image/add")
         .setOnError(onError)
         .setOnSucceed(onSucceed);
+    setHeader();
+}
+
+function setHeader() {
+    let headerText = "Добавить новую локацию типа " + document.querySelector("meta[name=locationType]").content;
+    let parentName = document.querySelector("meta[name=parentName").content;
+
+    if (parentName != "*") {
+        headerText += " к " + parentName;
+    }
+
+    document.getElementById("form-header").innerText = headerText;
 }
 
 function addLocation() {
