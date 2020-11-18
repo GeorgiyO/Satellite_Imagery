@@ -1,6 +1,8 @@
 package org.example.config;
 
 import com.google.gson.Gson;
+import org.example.controller.image.form.AddingForm;
+import org.example.controller.image.form.UpdatingForm;
 import org.example.database.attraction.AttractionMapper;
 import org.example.database.attraction.AttractionStorage;
 import org.example.database.attraction.AttractionStorageImp;
@@ -18,6 +20,7 @@ import org.example.database.region.RegionStorage;
 import org.example.database.region.RegionStorageImp;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.context.annotation.SessionScope;
 
 @Configuration
 public class BeanConfiguration {
@@ -64,6 +67,17 @@ public class BeanConfiguration {
     @Bean
     AttractionMapper attractionMapper() {
         return new AttractionMapper();
+    }
+
+    @Bean
+    @SessionScope
+    AddingForm addingForm() {
+        return new AddingForm();
+    }
+    @Bean
+    @SessionScope
+    UpdatingForm updatingForm() {
+        return new UpdatingForm();
     }
 
     @Bean

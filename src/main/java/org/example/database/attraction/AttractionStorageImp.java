@@ -27,7 +27,7 @@ public class AttractionStorageImp implements AttractionStorage {
     public Attraction get(int id) {
         Attraction attraction = null;
 
-        String sqlQuery = "SELECT * FROM Attraction WHERE id = ?";
+        String sqlQuery = "SELECT * FROM attraction WHERE id = ?";
         attraction = jdbcTemplate.query(sqlQuery, context.getBean(AttractionMapper.class), id).get(0);
 
         return attraction;
@@ -37,7 +37,7 @@ public class AttractionStorageImp implements AttractionStorage {
     public Attraction get(String name) {
         Attraction attraction = null;
 
-        String sqlQuery = "SELECT * FROM Attraction WHERE name = ?";
+        String sqlQuery = "SELECT * FROM attraction WHERE name = ?";
         attraction = jdbcTemplate.query(sqlQuery, context.getBean(AttractionMapper.class), name).get(0);
 
         return attraction;
@@ -45,19 +45,19 @@ public class AttractionStorageImp implements AttractionStorage {
 
     @Override
     public List<Attraction> getList(int parentId) {
-        String sqlQuery = "SELECT * FROM Attraction WHERE city_id = ?";
+        String sqlQuery = "SELECT * FROM attraction WHERE city_id = ?";
         return jdbcTemplate.query(sqlQuery, context.getBean(AttractionMapper.class), parentId);
     }
 
     @Override
     public void add(Attraction attraction) {
-        String sqlQuery = "INSERT INTO Attraction (name, description, city_id) VALUES (?, ?, ?)";
+        String sqlQuery = "INSERT INTO attraction (name, description, city_id) VALUES (?, ?, ?)";
         jdbcTemplate.update(sqlQuery, attraction.getName(), attraction.getDescription(), attraction.getCity().getId());
     }
 
     @Override
     public void update(Attraction attraction) {
-        String sqlQuery = "UPDATE Attraction SET name = ?, description = ?, city_id = ? WHERE id = ?";
+        String sqlQuery = "UPDATE attraction SET name = ?, description = ?, city_id = ? WHERE id = ?";
         jdbcTemplate.update(sqlQuery, attraction.getName(), attraction.getDescription(), attraction.getCity().getId(), attraction.getId());
     }
 
@@ -69,13 +69,13 @@ public class AttractionStorageImp implements AttractionStorage {
         image.setLocationId(id);
         imageStorage.delete(image);
 
-        String sqlQuery = "DELETE FROM Attraction WHERE id = ?";
+        String sqlQuery = "DELETE FROM attraction WHERE id = ?";
         jdbcTemplate.update(sqlQuery, id);
     }
 
     @Override
     public void deleteByParentId(int parentId) {
-        String sqlQuery = "SELECT id FROM Attraction WHERE city_id = ?";
+        String sqlQuery = "SELECT id FROM attraction WHERE city_id = ?";
         List<Integer> idList = jdbcTemplate.query(sqlQuery, (rs, i) -> rs.getInt("id"), parentId);
 
         for (var id : idList) {

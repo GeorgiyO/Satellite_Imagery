@@ -1,5 +1,6 @@
 import {Ajax} from "/js/modules/Ajax.js";
 import {redirect} from "/js/modules/jumper/Linker.js";
+import {getParentType} from "/js/modules/ladder.js";
 
 console.log("add location js init");
 
@@ -44,11 +45,21 @@ function updateRequest() {
 function onSucceed(response) {
     if (response.startsWith("redirect")) {
         redirect(response.split(":")[1]);
+    } else if (response == "imageFormatError") {
+        document.getElementById("image-error").innerText = "Файл должен быть png формата";
+    } else if (response == "typeError") {
+        console.log("Заданного типа данных не сщуествует");
+    } else if (response == "uncheckedFieldsError") {
+        document.getElementById("parentName-error").innerText = "Локации типа " + getParentType(document.querySelector("meta[name=locationType]").content) + " с таким именем не существует"
     } else {
-        //парсим на json и обрабатываем ошибки
+        response = JSON.parse(response);
+        console.log(response);
+        for (const [key, value] of Object.entries(response)) {
+            document.getElementById(key + "-error").innerText = value;
+        }
     }
 }
 
 function onError(code) {
-    console.log(code);
+    console.log(error);
 }

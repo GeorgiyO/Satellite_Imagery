@@ -26,7 +26,7 @@ public class RegionStorageImp implements RegionStorage {
     public Region get(int id) {
         Region region = null;
 
-        String sqlQuery = "SELECT * FROM Region WHERE id = ?";
+        String sqlQuery = "SELECT * FROM region WHERE id = ?";
         region = jdbcTemplate.query(sqlQuery, context.getBean(RegionMapper.class), id).get(0);
 
         return region;
@@ -36,7 +36,7 @@ public class RegionStorageImp implements RegionStorage {
     public Region get(String name) {
         Region region = null;
 
-        String sqlQuery = "SELECT * FROM Region WHERE name = ?";
+        String sqlQuery = "SELECT * FROM region WHERE name = ?";
         region = jdbcTemplate.query(sqlQuery, context.getBean(RegionMapper.class), name).get(0);
 
         return region;
@@ -44,19 +44,19 @@ public class RegionStorageImp implements RegionStorage {
 
     @Override
     public List<Region> getList(int parentId) {
-        String sqlQuery = "SELECT * FROM Region WHERE country_id = ?";
+        String sqlQuery = "SELECT * FROM region WHERE country_id = ?";
         return jdbcTemplate.query(sqlQuery, context.getBean(RegionMapper.class), parentId);
     }
 
     @Override
     public void add(Region region) {
-        String sqlQuery = "INSERT INTO Region (name, description, country_id) VALUES (?, ?, ?)";
+        String sqlQuery = "INSERT INTO region (name, description, country_id) VALUES (?, ?, ?)";
         jdbcTemplate.update(sqlQuery, region.getName(), region.getDescription(), region.getCountry().getId());
     }
 
     @Override
     public void update(Region region) {
-        String sqlQuery = "UPDATE Region SET name = ?, description = ?, country_id = ? WHERE id = ?";
+        String sqlQuery = "UPDATE region SET name = ?, description = ?, country_id = ? WHERE id = ?";
         jdbcTemplate.update(sqlQuery, region.getName(), region.getDescription(), region.getCountry().getId(), region.getId());
     }
 
@@ -70,13 +70,13 @@ public class RegionStorageImp implements RegionStorage {
         image.setLocationId(id);
         imageStorage.delete(image);
 
-        String sqlQuery = "DELETE FROM Region WHERE id = ?";
+        String sqlQuery = "DELETE FROM region WHERE id = ?";
         jdbcTemplate.update(sqlQuery, id);
     }
 
     @Override
     public void deleteByParentId(int parentId) {
-        String sqlQuery = "SELECT id FROM Region WHERE country_id = ?";
+        String sqlQuery = "SELECT id FROM region WHERE country_id = ?";
         List<Integer> idList = jdbcTemplate.query(sqlQuery, (rs, i) -> rs.getInt("id"), parentId);
 
         for (var id : idList) {

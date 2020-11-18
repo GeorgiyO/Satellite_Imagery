@@ -17,6 +17,11 @@ function init() {
 }
 
 function addLocation() {
+
+    Array.prototype.forEach.call(document.getElementsByClassName("error"), (errorField) => {
+        errorField.innerText = "";
+    });
+
     let type = document.querySelector("meta[name=locationType]").content;
     let parentName = document.querySelector("meta[name=parentName").content;
     let name = document.getElementById("name").value;
@@ -38,11 +43,23 @@ function addLocation() {
 function onSucceed(response) {
     if (response.startsWith("redirect")) {
         redirect(response.split(":")[1]);
+    } else if (response == "imageFormatError") {
+        document.getElementById("image-error").innerText = "Файл должен быть png формата";
+    } else if (response == "typeError") {
+        console.log("Заданного типа данных не сщуествует");
+    } else if (response == "parentNameError") {
+        console.log("Данного родителя не сщуествует");
     } else {
-        //парсим на json и обрабатываем ошибки
+        response = JSON.parse(response);
+        console.log(response);
+        for (const [key, value] of Object.entries(response)) {
+            document.getElementById(key + "-error").innerText = value;
+        }
     }
 }
 
 function onError(code) {
-    console.log(code);
+    if (code == 400) {
+        document.getElementById("image-error").innerText = "Файл не выбран";
+    }
 }

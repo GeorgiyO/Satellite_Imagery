@@ -1,9 +1,11 @@
 /* 
  * uses window.CurrentPage object, that must init with every page-loading by page-init-script
  */
-import {Ajax} from "/js/modules/ajax.js";
+import {Ajax} from "/js/modules/Ajax.js";
 import * as handler from "./Handler.js";
 import {getErrorPage} from "/js/modules/errorPage.js";
+
+export {setUpLinks, redirect, loadError}
 
 let content = document.getElementById("content");
 handler.setDiv(content);
@@ -19,7 +21,7 @@ ajax.setMethod("Get")
 
 // public:
 
-export function setUpLinks(links) {
+function setUpLinks(links) {
     console.log(links);
     Array.prototype.forEach.call(links, (link) => {
         link.onclick = (e) => {
@@ -28,8 +30,18 @@ export function setUpLinks(links) {
     });
 }
 
-export function redirect(href) {
+function redirect(href) {
     load(href);
+}
+
+function loadError(errorHTML) {
+    if (!handler.isBlocked()) {
+
+        handler.start();
+        let onClose = window.CurrentPage.onClose;
+        if (onClose != undefined) onClose();
+        handler.setData(errorHTML, "/");
+    }
 }
 
 // private:

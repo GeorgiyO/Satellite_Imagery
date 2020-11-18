@@ -1,6 +1,8 @@
 import {Ajax} from "/js/modules/Ajax.js";
+import {loadError} from "/js/modules/jumper/Linker.js";
 import {setUpLinks} from "/js/modules/jumper/Linker.js";
 import * as ladder from "/js/modules/ladder.js";
+import {getErrorPage} from "/js/modules/errorPage.js";
 
 console.log("execute location template init script");
 
@@ -119,10 +121,6 @@ function pushChild(child) {
     childrenDiv.appendChild(document.createElement("br"));
 }
 
-function onError(code) {
-    console.log("error: " + code);
-}
-
 function appendAddChildLink() {
     let editLinksDiv = document.getElementById("editLinks");
     let childType = ladder.getChildType(type);
@@ -134,5 +132,11 @@ function appendAddChildLink() {
         a.classList.add("ajaxLink");
         editLinksDiv.appendChild(a);
         setUpLinks([a]);
+    }
+}
+
+function onError(code) {
+    if (code == 500) {
+        loadError(getErrorPage(code + ": Страница не найдена"));
     }
 }

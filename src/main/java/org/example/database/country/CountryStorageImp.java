@@ -27,7 +27,7 @@ public class CountryStorageImp implements CountryStorage {
     public Country get(int id) {
         Country country = null;
 
-        String sqlQuery = "SELECT * FROM Country WHERE id = ?";
+        String sqlQuery = "SELECT * FROM country WHERE id = ?";
         country = jdbcTemplate.query(sqlQuery, context.getBean(CountryMapper.class), id).get(0);
 
         return country;
@@ -37,7 +37,7 @@ public class CountryStorageImp implements CountryStorage {
     public Country get(String name) {
         Country country = null;
 
-        String sqlQuery = "SELECT * FROM Country WHERE name = ?";
+        String sqlQuery = "SELECT * FROM country WHERE name = ?";
         country = jdbcTemplate.query(sqlQuery, context.getBean(CountryMapper.class), name).get(0);
 
         return country;
@@ -45,19 +45,19 @@ public class CountryStorageImp implements CountryStorage {
 
     @Override
     public List<Country> getList() {
-        String sqlQuery = "SELECT * FROM Country";
+        String sqlQuery = "SELECT * FROM country";
         return jdbcTemplate.query(sqlQuery, context.getBean(CountryMapper.class));
     }
 
     @Override
     public void add(Country country) {
-        String sqlQuery = "INSERT INTO Country (name, description) VALUES (?, ?)";
+        String sqlQuery = "INSERT INTO country (name, description) VALUES (?, ?)";
         jdbcTemplate.update(sqlQuery, country.getName(), country.getDescription());
     }
 
     @Override
     public void update(Country country) {
-        String sqlQuery = "UPDATE Country SET name = ?, description = ? WHERE id = ?";
+        String sqlQuery = "UPDATE country SET name = ?, description = ? WHERE id = ?";
         jdbcTemplate.update(sqlQuery, country.getName(), country.getDescription(), country.getId());
     }
 
@@ -72,7 +72,7 @@ public class CountryStorageImp implements CountryStorage {
         imageStorage.delete(image);
 
 
-        String sqlQuery = "DELETE FROM Country WHERE id = ?";
+        String sqlQuery = "DELETE FROM country WHERE id = ?";
         jdbcTemplate.update(sqlQuery, id);
     }
 }

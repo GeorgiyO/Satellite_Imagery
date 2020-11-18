@@ -1,20 +1,17 @@
 package org.example.controller.image;
 
-import org.example.database.attraction.AttractionStorage;
-import org.example.database.city.CityStorage;
-import org.example.database.country.CountryStorage;
+import org.example.controller.image.form.AddingForm;
 import org.example.database.image.ImageStorage;
-import org.example.database.region.RegionStorage;
 import org.example.domain.Image;
 import org.example.domain.location.*;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Objects;
 
 @Controller
 @RequestMapping("/moderator/image/add")
@@ -22,14 +19,9 @@ public class ImageAddController {
 
     @Autowired
     private ImageStorage imageStorage;
+
     @Autowired
-    private CountryStorage countryStorage;
-    @Autowired
-    private RegionStorage regionStorage;
-    @Autowired
-    private CityStorage cityStorage;
-    @Autowired
-    private AttractionStorage attractionStorage;
+    private AddingForm addingForm;
 
     @PostMapping
     @ResponseBody
@@ -40,74 +32,38 @@ public class ImageAddController {
                               @RequestParam("image") MultipartFile file
     ) throws IOException {
 
-        LoggerFactory.getLogger(this.getClass()).info(locationType + " " + parentName + " " + name + " " + description + " " + file.getSize());
+        LoggerFactory.getLogger(this.getClass()).info(String.format("try add location: %s %s %s %s", locationType, parentName, name, description));
+        LoggerFactory.getLogger(this.getClass()).info(String.format("with file: %s %s %s", file.getOriginalFilename(), file.getContentType(), file.getSize()));
 
-        LocationType type = LocationType.fromString(locationType);
+        if (!Objects.equals(file.getContentType(), "image/png")) {
+            return "imageFormatError";
+        }
 
-        int id = createLocation(type, name, description, parentName);
+        LocationType type;
+        int id = -1;
+
+        try {
+             type = LocationType.fromString(locationType);
+        } catch (IllegalStateException e) {
+            return "typeError";
+        }
+
+        addingForm.setData(type, name, description, parentName);
+        if (addingForm.isValid()) {
+            try {
+                id = addingForm.createLocation();
+            } catch (Exception e) {
+                return "parentNameError";
+            }
+        } else {
+            return String.valueOf(addingForm.getErrors());
+        }
+
         createImage(type, id, file);
 
         return "redirect:/Photo/" + locationType + "/" + name;
     }
 
-    private int createLocation(LocationType type, String name, String description, String parentName) {
-        switch (type) {
-            case COUNTRY: return createCountry(name, description);
-            case REGION: return createRegion(name, description, parentName);
-            case CITY: return createCity(name, description, parentName);
-            case ATTRACTION: return createAttraction(name, description, parentName);
-            default: throw new IllegalStateException("Unexpected value: " + type.toString());
-        }
-    }
-
-    private int createCountry(String name, String description) {
-        Country country = new Country();
-        country.setName(name);
-        country.setDescription(description);
-
-        countryStorage.add(country);
-
-        return countryStorage.get(name).getId();
-    }
-
-    private int createRegion(String name, String description, String parentName) {
-        Country country = countryStorage.get(parentName);
-
-        Region region = new Region();
-        region.setName(name);
-        region.setDescription(description);
-        region.setCountry(country);
-
-        regionStorage.add(region);
-
-        return regionStorage.get(name).getId();
-    }
-
-    private int createCity(String name, String description, String parentName) {
-        Region region = regionStorage.get(parentName);
-
-        City city = new City();
-        city.setName(name);
-        city.setDescription(description);
-        city.setRegion(region);
-
-        cityStorage.add(city);
-
-        return cityStorage.get(name).getId();
-    }
-
-    private int createAttraction(String name, String description, String parentName) {
-        City city = cityStorage.get(parentName);
-
-        Attraction attraction = new Attraction();
-        attraction.setName(name);
-        attraction.setDescription(description);
-        attraction.setCity(city);
-
-        attractionStorage.add(attraction);
-
-        return attractionStorage.get(name).getId();
-    }
 
     private void createImage(LocationType locationType, int id, MultipartFile file) throws IOException {
         Image image = new Image();

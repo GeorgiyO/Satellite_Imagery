@@ -27,7 +27,7 @@ public class CityStorageImp implements CityStorage {
     public City get(int id) {
         City city = null;
 
-        String sqlQuery = "SELECT * FROM City WHERE id = ?";
+        String sqlQuery = "SELECT * FROM city WHERE id = ?";
         city = jdbcTemplate.query(sqlQuery, context.getBean(CityMapper.class), id).get(0);
 
         return city;
@@ -37,7 +37,7 @@ public class CityStorageImp implements CityStorage {
     public City get(String name) {
         City city = null;
 
-        String sqlQuery = "SELECT * FROM City WHERE name = ?";
+        String sqlQuery = "SELECT * FROM city WHERE name = ?";
         city = jdbcTemplate.query(sqlQuery, context.getBean(CityMapper.class), name).get(0);
 
         return city;
@@ -45,19 +45,19 @@ public class CityStorageImp implements CityStorage {
 
     @Override
     public List<City> getList(int parentId) {
-        String sqlQuery = "SELECT * FROM City WHERE region_id = ?";
+        String sqlQuery = "SELECT * FROM city WHERE region_id = ?";
         return jdbcTemplate.query(sqlQuery, context.getBean(CityMapper.class), parentId);
     }
 
     @Override
     public void add(City city) {
-        String sqlQuery = "INSERT INTO City (name, description, region_id) VALUES (?, ?, ?)";
+        String sqlQuery = "INSERT INTO city (name, description, region_id) VALUES (?, ?, ?)";
         jdbcTemplate.update(sqlQuery, city.getName(), city.getDescription(), city.getRegion().getId());
     }
 
     @Override
     public void update(City city) {
-        String sqlQuery = "UPDATE City SET name = ?, description = ?, region_id = ? WHERE id = ?";
+        String sqlQuery = "UPDATE city SET name = ?, description = ?, region_id = ? WHERE id = ?";
         jdbcTemplate.update(sqlQuery, city.getName(), city.getDescription(), city.getRegion().getId(), city.getId());
     }
 
@@ -70,13 +70,13 @@ public class CityStorageImp implements CityStorage {
         image.setLocationId(id);
         imageStorage.delete(image);
 
-        String sqlQuery = "DELETE FROM City WHERE id = ?";
+        String sqlQuery = "DELETE FROM city WHERE id = ?";
         jdbcTemplate.update(sqlQuery, id);
     }
 
     @Override
     public void deleteByParentId(int parentId) {
-        String sqlQuery = "SELECT id FROM City WHERE region_id = ?";
+        String sqlQuery = "SELECT id FROM city WHERE region_id = ?";
         List<Integer> idList = jdbcTemplate.query(sqlQuery, (rs, i) -> rs.getInt("id"), parentId);
 
         for (var id : idList) {

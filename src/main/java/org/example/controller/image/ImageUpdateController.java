@@ -1,5 +1,6 @@
 package org.example.controller.image;
 
+import org.example.controller.image.form.UpdatingForm;
 import org.example.database.attraction.AttractionStorage;
 import org.example.database.city.CityStorage;
 import org.example.database.country.CountryStorage;
@@ -16,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Objects;
 
 @Controller
 @RequestMapping("moderator/image/update")
@@ -23,19 +25,9 @@ public class ImageUpdateController {
 
     @Autowired
     private ImageStorage imageStorage;
-    @Autowired
-    private CountryStorage countryStorage;
-    @Autowired
-    private RegionStorage regionStorage;
-    @Autowired
-    private CityStorage cityStorage;
-    @Autowired
-    private AttractionStorage attractionStorage;
 
-    @GetMapping
-    public String getUpdatingImageForm(Model model) {
-        return "updateImageTemplate";
-    }
+    @Autowired
+    private UpdatingForm updatingForm;
 
     @PostMapping
     @ResponseBody
@@ -47,70 +39,42 @@ public class ImageUpdateController {
                                  @RequestParam("image") MultipartFile file,
                                  HttpServletResponse response) throws IOException {
 
-        LocationType type = LocationType.fromString(locationType);
+        LoggerFactory.getLogger(this.getClass()).info(String.format("try update location: %s %s %s %s %s", locationType, name, parentName, newName, description));
+        LoggerFactory.getLogger(this.getClass()).info(String.format("with file: %s %s %s", file.getOriginalFilename(), file.getContentType(), file.getSize()));
 
-        int id = updateLocation(type, name, parentName, newName, description);
+        if (!file.isEmpty() && !Objects.equals(file.getContentType(), "image/png")) {
+            return "imageFormatError";
+        }
+
+        LocationType type;
+        int id = -1;
+
+        try {
+            type = LocationType.fromString(locationType);
+        } catch (IllegalStateException e) {
+            return "typeError";
+        }
+
+        updatingForm.setData(type, name, parentName, newName , description);
+
+        if (updatingForm.isValid()) {
+            try {
+                id = updatingForm.updateLocation();
+            } catch (Exception e) {
+                return "uncheckedFieldsError";
+            }
+        } else {
+            return String.valueOf(updatingForm.getErrors());
+        }
 
         if (!file.isEmpty()) {
             updateFile(type, id, file);
         }
 
         String redirect = "redirect:/Photo/" + locationType + "/";
-        redirect += isEmpty(newName) ? name : newName;
+        redirect += newName.strip().length() == 0 ? name : newName;
 
         return redirect;
-    }
-
-    private int updateLocation(LocationType type, String name, String parentName, String newName, String description) {
-        switch (type) {
-            case COUNTRY: return updateCountry(name, newName, description);
-            case REGION: return updateRegion(name, newName, description, parentName);
-            case CITY: return updateCity(name, newName, description, parentName);
-            case ATTRACTION: return updateAttraction(name, newName, description, parentName);
-            default: throw new IllegalStateException("Unexpected value: " + type);
-        }
-    }
-
-    private int updateCountry(String name, String newName, String description) {
-        Country country = countryStorage.get(name);
-        if (!isEmpty(newName)) country.setName(newName);
-        if (!isEmpty(description)) country.setDescription(description);
-        countryStorage.update(country);
-        return country.getId();
-    }
-
-    private int updateRegion(String name, String newName, String description, String parentName) {
-        Region region = regionStorage.get(name);
-        if (!isEmpty(newName)) region.setName(newName);
-        if (!isEmpty(description)) region.setDescription(description);
-        if (!isEmpty(parentName)) region.setCountry(countryStorage.get(parentName));
-        regionStorage.update(region);
-        return region.getId();
-    }
-
-    private int updateCity(String name, String newName, String description, String parentName) {
-
-        LoggerFactory.getLogger("ХУЙ ХУЙ ХУЙ ХУЙ ХУЙ ХУЙ").info(String.format("%s %s %s %s", name, newName, description, parentName));
-
-        City city = cityStorage.get(name);
-        if (!isEmpty(newName)) city.setName(newName);
-        if (!isEmpty(description)) city.setDescription(description);
-        if (!isEmpty(parentName)) city.setRegion(regionStorage.get(parentName));
-        cityStorage.update(city);
-        return city.getId();
-    }
-
-    private int updateAttraction(String name, String newName, String description, String parentName) {
-        Attraction attraction = attractionStorage.get(name);
-        if (!isEmpty(newName)) attraction.setName(newName);
-        if (!isEmpty(description)) attraction.setDescription(description);
-        if (!isEmpty(parentName)) attraction.setCity(cityStorage.get(parentName));
-        attractionStorage.update(attraction);
-        return attraction.getId();
-    }
-
-    private boolean isEmpty(String field) {
-        return field.strip().length() == 0;
     }
 
     private void updateFile(LocationType type, int locationId, MultipartFile file) throws IOException {
