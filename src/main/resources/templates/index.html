@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
     <head>
         <title>Nekogochan</title>
         <th:block th:replace="fragment/head.html :: head"></th:block>
@@ -18,7 +18,7 @@
                     <main>
 
                         <!--Если не залогинен-->
-                        <section class="center-content">
+                        <section class="center-content" sec:authorize="!isAuthenticated()">
                             <h2>Чтобы просматривать фотографии необходимо войти в систему:</h2>
                             <a class="" href="/registration"><button class="fill">Зарегестрироваться</button></a>
                             <a class="" href="/login"><button class="fill">Войти в систему</button></a>
@@ -34,13 +34,13 @@
                         </section>
 
                         <!--Если модератор-->
-                        <section>
+                        <section sec:authorize="hasRole('ROLE_ADMIN')">
                             <a th:href="@{/moderator/image/add/country/*}" class="ajaxLink">
                                 <button class="fill">Добавить страну</button>
                             </a>
                         </section>
 
-                        <section id="countries">
+                        <section id="countries" sec:authorize="isAuthenticated()">
                             <!--Здесь находится список стран-->
                         </section>
 
