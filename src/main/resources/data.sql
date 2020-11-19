@@ -61,3 +61,8 @@ create table image (
 	data longblob not null,
 	unique (location_id, location_type)
 );
+
+
+insert into user values (1,'Dmitry','$2y$12$sHe0D.Vh.O1SK6Ub2DVruOrBrPzMjUadUXyIcuzPmr3QSnIEPwgD2');
+insert into roles values (1,'ROLE_ADMIN');
+insert into user_role values (1,1);
