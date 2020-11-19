@@ -24,7 +24,7 @@ public class SecurityController {
 
     @PostMapping("/logout")
     public String logout() {
-        return "redirect:login";
+        return "redirect:/";
     }
 
     @GetMapping("/failure")
