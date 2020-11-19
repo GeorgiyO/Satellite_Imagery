@@ -33,12 +33,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         //TODO - Нужно дорабатывать ограничения кто куда.
-        httpSecurity
+        httpSecurity.httpBasic().disable()
                 .csrf()
                 .disable()
                 .authorizeRequests()
-                .antMatchers("/*").hasAnyRole("ADMIN")
-                .and().formLogin();
+                .antMatchers("/moderator").hasAnyRole("USER")
+                .antMatchers("/registration").not().fullyAuthenticated()
+                .and()
+                .formLogin()
+                .loginPage("/login").failureUrl("/failure").permitAll()
+                .and().logout().logoutUrl("/logout");
 
     }
 
