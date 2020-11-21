@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+    <head>
+        <title>Nekogochan</title>
+        <th:block th:replace="fragment/head.html :: head"></th:block>
+    </head>
+    <body>
+        <div class="wrapper">
+            <div id="navDiv" th:insert="fragment/nav.html :: nav"></div>
+            <div id="content">
+                <th:block th:fragment="content">
+                    <main>
+                        <section>
+                            <h2>Подтвердите действие<br>Предыдущая копия базы данных будет перезаписана</h2>
+                            <button class="fill" onclick="window.PageCreateBackup()">Перезаписать</button>
+                            <a class="ajaxLink" href="/administrator/backup"><button class="fill">Отмена</button></a>
+                        </section>
+                    </main>
+                    <script type="module" src="/js/pageScripts/adm/backupCreate.js"></script>
+                    <script>
+                        window.CurrentPage = {};
+                    </script>
+                </th:block>
+            </div>
+            <div th:insert="fragment/loading.html :: loading" id="pageLoading" class="hide"></div>
+        </div>
+        <th:block th:insert="fragment/footer.html :: footer"></th:block>
+        <th:block th:insert="fragment/scripts.html :: scripts"></th:block>
+    </body>
+</html>

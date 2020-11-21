@@ -1,5 +1,5 @@
 import {Ajax} from "/js/modules/Ajax.js";
-import {loadError} from "/js/modules/jumper/Linker.js";
+import {loadHTML} from "/js/modules/jumper/Linker.js";
 import {setUpLinks} from "/js/modules/jumper/Linker.js";
 import * as ladder from "/js/modules/ladder.js";
 import {getErrorPage} from "/js/modules/errorPage.js";
@@ -153,6 +153,6 @@ function appendAddChildLink() {
 
 function onError(code) {
     if (code == 500) {
-        loadError(getErrorPage(code + ": Страница не найдена"));
+        loadHTML(getErrorPage(code + ": Страница не найдена"));
     }
 }

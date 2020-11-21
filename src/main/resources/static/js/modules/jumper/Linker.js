@@ -5,7 +5,7 @@ import {Ajax} from "/js/modules/Ajax.js";
 import * as handler from "./Handler.js";
 import {getErrorPage} from "/js/modules/errorPage.js";
 
-export {setUpLinks, redirect, loadError}
+export {setUpLinks, redirect, loadHTML}
 
 let content = document.getElementById("content");
 handler.setDiv(content);
@@ -32,13 +32,13 @@ function redirect(href) {
     load(href);
 }
 
-function loadError(errorHTML) {
+function loadHTML(HTML) {
     if (!handler.isBlocked()) {
 
         handler.start();
         let onClose = window.CurrentPage.onClose;
         if (onClose != undefined) onClose();
-        handler.setData(errorHTML, "/");
+        handler.setData(HTML, "/");
     }
 }
 

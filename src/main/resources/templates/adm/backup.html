@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+    <head>
+        <title>Nekogochan</title>
+        <th:block th:replace="fragment/head.html :: head"></th:block>
+    </head>
+    <body>
+        <div class="wrapper">
+            <div id="navDiv" th:insert="fragment/nav.html :: nav"></div>
+            <div id="content">
+                <th:block th:fragment="content">
+                    <main>
+                        <section>
+                            <h2>Панель восстановления базы данных снимков и пользователей</h2>
+
+                            <p>Создать копию базы данных (будет перезаписана предущая копия)</p>
+                            <a class="ajaxLink" href="/administrator/backup/create"><button class="fill">Перезаписать копию</button></a>
+
+                            <br><br>
+                            <p>Восстановить базу данных из копии</p>
+                            <a class="ajaxLink" href="/administrator/backup/restore"><button class="fill">Восстановить</button></a>
+
+                            <br><br>
+                            <a class="ajaxLink" href="/administrator"><button class="fill">Назад</button></a>
+                        </section>
+                    </main>
+                    <script>
+                        window.CurrentPage = {};
+                    </script>
+                </th:block>
+            </div>
+            <div th:insert="fragment/loading.html :: loading" id="pageLoading" class="hide"></div>
+        </div>
+        <th:block th:insert="fragment/footer.html :: footer"></th:block>
+        <th:block th:insert="fragment/scripts.html :: scripts"></th:block>
+    </body>
+</html>

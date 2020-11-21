@@ -3,6 +3,8 @@ package org.example.config;
 import com.google.gson.Gson;
 import org.example.controller.image.form.AddingForm;
 import org.example.controller.image.form.UpdatingForm;
+import org.example.database.administrator.BackupHandler;
+import org.example.database.administrator.WindowsMySQLBackupHandler;
 import org.example.database.attraction.AttractionMapper;
 import org.example.database.attraction.AttractionStorage;
 import org.example.database.attraction.AttractionStorageImp;
@@ -67,6 +69,11 @@ public class BeanConfiguration {
     @Bean
     AttractionMapper attractionMapper() {
         return new AttractionMapper();
+    }
+
+    @Bean
+    BackupHandler backupHandler() {
+        return new WindowsMySQLBackupHandler();
     }
 
     @Bean
