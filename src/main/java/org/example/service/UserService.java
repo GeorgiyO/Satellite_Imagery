@@ -60,4 +60,11 @@ public class UserService implements UserDetailsService {
         return true;
     }
 
+    public List<User> findByNameContaining(String name) {
+        return userRepository.findByNameContaining(name);
+    }
+
+    public void deleteById(long id) {
+        userRepository.deleteById(id);
+    }
 }

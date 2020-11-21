@@ -1,0 +1,25 @@
+#userList {
+    margin-top: 25px;
+}
+
+#userList div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#userList div > div {
+    display: flex;
+}
+
+#userList div .buttons button {
+    font-size: 0.75rem;
+}
+
+#userList div .buttons .active-effect-button {
+    background-color: hsla(210, 100%, 65%, 80%);
+}
+
+#userList div .buttons .delete-button {
+    background-color: hsla(0, 70%, 35%, 80%);
+}

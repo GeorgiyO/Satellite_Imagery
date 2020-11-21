@@ -11,19 +11,24 @@
                 <th:block th:fragment="content">
                     <main>
                         <section>
-                            <h2>Панель управления администратора</h2>
-
-                            <a class="ajaxLink" href="/"><button class="fill">Вернуться на главную</button></a>
-
-                            <br><br>
-                            <a class="ajaxLink" href="/administrator/backup"><button class="fill">Управление базой данных</button></a>
+                            <h2>Панель управления пользователями</h2>
+                            <a class="ajaxLink" href="/administrator"><button class="fill">Назад</button></a>
 
                             <br><br>
-                            <a class="ajaxLink" href="/administrator/users"><button class="fill">Управление пользователями</button></a>
-                            
-                            
+                            <p>Найти пользователей по имени (логину):</p>
+                            <input type="text" id="username">
+                            <br>
+                            <button class="fill" onclick="window.PageFindUsers()">Найти</button>
+
+                            <div id="info"></div>
+
+                            <div id="userList">
+                                <!--Список пользователей-->
+                            </div>
+
                         </section>
                     </main>
+                    <script type="module" src="/js/pageScripts/adm/usersPanel.js"></script>
                     <script>
                         window.CurrentPage = {};
                     </script>

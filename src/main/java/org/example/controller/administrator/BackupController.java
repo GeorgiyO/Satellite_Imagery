@@ -14,44 +14,35 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.Arrays;
 
 @Controller
-@RequestMapping("/administrator")
-public class AdministratorController {
+@RequestMapping("/administrator/backup")
+public class BackupController {
 
     @Autowired
     private BackupHandler backupHandler;
 
-    @GetMapping
-    public String admPanel() {
-        return "/adm/panel";
-    }
-    @GetMapping("/ajax")
-    public String admPanelAjax() {
-        return Fragment.get("/adm/panel");
-    }
-
-    @GetMapping("/backup")
+    @GetMapping()
     public String backupPage(Model model) {
         return "/adm/backup";
     }
-    @GetMapping("/backup/ajax")
+    @GetMapping("/ajax")
     public String backupPageAjax(Model model) {
         return Fragment.get( "/adm/backup");
     }
 
-    @GetMapping("/backup/create")
+    @GetMapping("/create")
     public String createBackupPage() {
         return "/adm/backup-create";
     }
-    @GetMapping("/backup/create/ajax")
+    @GetMapping("/create/ajax")
     public String createBackupPageAjax(Model model) {
         return Fragment.get( "/adm/backup-create");
     }
 
-    @GetMapping("/backup/restore")
+    @GetMapping("/restore")
     public String restoreDatabasePage() {
         return "/adm/backup-restore";
     }
-    @GetMapping("/backup/restore/ajax")
+    @GetMapping("/restore/ajax")
     public String restoreDatabasePageAjax(Model model) {
         return Fragment.get( "/adm/backup-restore");
     }
@@ -82,7 +73,5 @@ public class AdministratorController {
         }
         return Fragment.get("/adm/backup-restore-result");
     }
-
-
 
 }

@@ -34,7 +34,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.httpBasic().disable()
                 .csrf()
-                .ignoringAntMatchers("/logout")
+                .ignoringAntMatchers("/logout", "/login")
                 .and()
                 .authorizeRequests()
                 .antMatchers("/photo/**", "/location/**", "/list/**").hasAnyRole("USER", "MODERATOR", "ADMIN")

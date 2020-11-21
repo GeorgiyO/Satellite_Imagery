@@ -55,7 +55,6 @@ export class Ajax {
         xhr.open(this.method, this.url, this.async);
         this.headers.forEach((h) => {
             xhr.setRequestHeader(h.name, h.value);
-            console.log(h);
         });
         xhr.onreadystatechange = () => {
             if (xhr.readyState != 4) 
