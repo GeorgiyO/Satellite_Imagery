@@ -86,11 +86,12 @@ function addBackButton() {
     setUpLinks([a]);
     a.href = _type == null ? 
             "/" :
-            "/photo/" + _type + parentName();
+            "/photo/" + _type + "/" + parentName();
 
     let button = document.createElement("button");
+    button.classList.add("fill");
     button.innerText = "Отмена";
     a.appendChild(button);
     
-    document.getElementById("content").appendChild(a);
+    document.getElementsByClassName("form")[0].appendChild(a);
 }

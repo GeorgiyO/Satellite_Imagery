@@ -1,7 +1,14 @@
 <nav th:fragment="nav">
     <a class="nav-logo ajaxLink" href="/"><img src="/img/logo.png"></a>
     <ul>
-        <li sec:authorize="isAuthenticated()"><a href="/logout">Log Out</a></li>
-        <li sec:authorize="hasRole('ROLE_ADMIN')"><a class="ajaxLink" href="/administrator">Панель администрирования</a></li>
+        <li sec:authorize="isAuthenticated()">
+            <form method="POST" action="/logout" id="logout-form">
+                <a onclick="document.getElementById('logout-form').submit()">Выйти</a>
+            </form>
+        </li>
+        <li sec:authorize="hasRole('ROLE_ADMIN')">
+            <a class="ajaxLink" href="/administrator">Панель администрирования</a>
+
+        </li>
     </ul>
 </nav>

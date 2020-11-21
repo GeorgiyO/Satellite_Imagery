@@ -11,6 +11,8 @@
                 <th:block th:fragment="content">
                     <section class="form">
                         <form method="POST" action="/login" id="form">
+                            
+                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
 
                             <p>Логин:</p>
                             <div class="input-container">
@@ -20,7 +22,7 @@
                         
                             <p>Пароль:</p>
                             <div class="input-container">
-                                <input class="effect-1" type="text" placeholder="Пароль" name="password">
+                                <input class="effect-1" type="password" placeholder="Пароль" name="password">
                                 <span class="focus-border"></span>
                             </div>
 

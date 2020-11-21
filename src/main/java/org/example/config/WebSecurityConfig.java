@@ -34,17 +34,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.httpBasic().disable()
                 .csrf()
-                .disable()
+                .ignoringAntMatchers("/logout")
+                .and()
                 .authorizeRequests()
-                .antMatchers("/photo/**", "/location/**", "/list/**").hasAnyRole("USER")
-                .antMatchers("/moderator/**").hasAnyRole("MODERATOR")
+                .antMatchers("/photo/**", "/location/**", "/list/**").hasAnyRole("USER", "MODERATOR", "ADMIN")
+                .antMatchers("/moderator/**").hasAnyRole("MODERATOR", "ADMIN")
                 .antMatchers("/administrator/**").hasAnyRole("ADMIN")
                 .antMatchers("/registration").not().fullyAuthenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login").failureUrl("/failure").permitAll()
                 .and().logout().logoutUrl("/logout").deleteCookies("JSESSIONID").logoutSuccessUrl("/");
-
     }
-
 }

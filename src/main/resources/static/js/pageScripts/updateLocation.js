@@ -1,5 +1,5 @@
 import {Ajax} from "/js/modules/Ajax.js";
-import {redirect} from "/js/modules/jumper/Linker.js";
+import {redirect, setUpLinks} from "/js/modules/jumper/Linker.js";
 import {getParentType} from "/js/modules/ladder.js";
 
 console.log("add location js init");
@@ -27,11 +27,7 @@ function init() {
         .setOnError(onError)
         .setOnSucceed(onSucceed);
     setHeader();
-}
-
-function setHeader() {
-    let headerText = "Редактировать локацию типа " + type() + " с именем " + name();
-    document.getElementById("form-header").innerText = headerText;
+    addBackButton();
 }
 
 function updateRequest() {
@@ -75,4 +71,27 @@ function onSucceed(response) {
 
 function onError(code) {
     console.log(error);
+}
+
+
+function setHeader() {
+    let headerText = "Редактировать локацию типа " + type() + " с именем " + name();
+    document.getElementById("form-header").innerText = headerText;
+}
+
+function addBackButton() {
+    let a = document.createElement("a");
+    let _type = type();
+    a.classList.add("ajaxLink");
+    setUpLinks([a]);
+    a.href = _type == null ? 
+            "/" :
+            "/photo/" + _type + "/" + name();
+
+    let button = document.createElement("button");
+    button.classList.add("fill");
+    button.innerText = "Отмена";
+    a.appendChild(button);
+    
+    document.getElementsByClassName("form")[0].appendChild(a);
 }

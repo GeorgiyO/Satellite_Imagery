@@ -9,6 +9,15 @@ export class Ajax {
 
     headers = [];
 
+    constructor() {
+        let token = document.querySelector("meta[name='_csrf']").content;
+        let header = document.querySelector("meta[name='_csrf_header']").content;
+        this.addHeader({
+            name: header,
+            value: token
+        })
+    }
+
     setMethod(method) {
         this.method = method;
         return this;
@@ -46,6 +55,7 @@ export class Ajax {
         xhr.open(this.method, this.url, this.async);
         this.headers.forEach((h) => {
             xhr.setRequestHeader(h.name, h.value);
+            console.log(h);
         });
         xhr.onreadystatechange = () => {
             if (xhr.readyState != 4) 
