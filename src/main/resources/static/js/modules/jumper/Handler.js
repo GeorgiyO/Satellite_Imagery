@@ -63,11 +63,13 @@ function show() {
 }
 
 function showLoading() {
+    loadingDiv.style.display = "block";
     loadingDiv.classList.remove("hide");
 }
 
 function hideLoading() {
     loadingDiv.classList.add("hide");
+    setTimeout(()=>{loadingDiv.style.display="none"}, DELAY);
 }
 
 // page carring out:

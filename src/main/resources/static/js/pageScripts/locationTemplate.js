@@ -70,7 +70,7 @@ function appendParent() {
     button.classList.add("fill");
 
     if (parentType != null) {
-        a.setAttribute("href", "/Photo/" + parentType + "/" + location[parentType].name);
+        a.setAttribute("href", "/photo/" + parentType + "/" + location[parentType].name);
         button.innerText = location[parentType].name;
     } else {
         a.setAttribute("href", "/");
@@ -113,18 +113,19 @@ function appendChildHrefs() {
 }
 
 function pushChildList(children) {
+    if (children.length != 0) {
+        let h3 = document.createElement("h3");
+        h3.innerText = "Подобласти:";
+        childrenDiv.appendChild(h3);
 
-    let h3 = document.createElement("h3");
-    h3.innerText = "Подобласти:";
-    childrenDiv.appendChild(h3);
-
-    children.forEach(pushChild);
-    setUpLinks(document.querySelectorAll("#childrenHref .ajaxLink"));
+        children.forEach(pushChild);
+        setUpLinks(document.querySelectorAll("#childrenHref .ajaxLink"));
+    }
 }
 
 function pushChild(child) {
     let a = document.createElement("a");
-    a.setAttribute("href", "/Photo/" + ladder.getChildType(type) + "/" + child.name);
+    a.setAttribute("href", "/photo/" + ladder.getChildType(type) + "/" + child.name);
     a.classList.add("ajaxLink");
     a.innerText = child.name;
     childrenDiv.appendChild(a);

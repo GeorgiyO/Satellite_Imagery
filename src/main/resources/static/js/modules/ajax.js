@@ -50,10 +50,12 @@ export class Ajax {
         xhr.onreadystatechange = () => {
             if (xhr.readyState != 4) 
                 return;
-            if (xhr.status != 200)
+            if (xhr.status != 200) {
                 this.onError(xhr.status);
-            else
+            }
+            else {
                 this.onSucceed(xhr.responseText);
+            }
         }
         xhr.send(this.message);
     }

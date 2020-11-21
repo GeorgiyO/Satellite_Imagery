@@ -4,12 +4,22 @@ import {getParentType} from "/js/modules/ladder.js";
 
 console.log("add location js init");
 
+let type = () => {return document.querySelector("meta[name=locationType]").content};
+let name = () => {return document.querySelector("meta[name=oldName").content};
+let parentName = () => {return document.getElementById("parentName").value};
+let newName = () => {return document.getElementById("newName").value};
+let description = () => {return document.getElementById("description").value};
+let image = () => {return document.getElementById("image").files[0]};
+
 let ajax = new Ajax();
 
 init();
 
 window.PageUpdateLocation = updateRequest;
-window.PageOnLoadUpdateLocation = setHeader();
+window.PageOnLoadUpdateLocation = () => {
+    setHeader();
+    addBackButton();
+}
 
 function init() {
     ajax.setMethod("POST")
@@ -20,28 +30,24 @@ function init() {
 }
 
 function setHeader() {
-    let headerText = "Редактировать локацию типа " + document.querySelector("meta[name=locationType]").content + " с именем " + document.querySelector("meta[name=oldName").content;
+    let headerText = "Редактировать локацию типа " + type() + " с именем " + name();
     document.getElementById("form-header").innerText = headerText;
 }
 
 function updateRequest() {
-    let type = document.querySelector("meta[name=locationType]").content;
-    let name = document.querySelector("meta[name=oldName").content;
-    let parentName = document.getElementById("parentName").value;
-    let newName = document.getElementById("newName").value;
-    let description = document.getElementById("description").value;;
-    let image = document.getElementById("image").files[0];
 
     let formData = new FormData();
 
-    formData.append("type", type);
-    formData.append("name", name);
-    formData.append("parentName", parentName);
-    formData.append("newName", newName);
-    formData.append("description", description);
+    formData.append("type", type());
+    formData.append("name", name());
+    formData.append("parentName", parentName());
+    formData.append("newName", newName());
+    formData.append("description", description());
+
+    let _image = image();
     
-    if (image != undefined) {
-        formData.append("image", image);
+    if (_image != undefined) {
+        formData.append("image", _image);
     } else {
         formData.append("image", new Blob());
     }
@@ -57,7 +63,7 @@ function onSucceed(response) {
     } else if (response == "typeError") {
         console.log("Заданного типа данных не сщуествует");
     } else if (response == "uncheckedFieldsError") {
-        document.getElementById("parentName-error").innerText = "Локации типа " + getParentType(document.querySelector("meta[name=locationType]").content) + " с таким именем не существует"
+        document.getElementById("parentName-error").innerText = "Локации типа " + getParentType(type()) + " с таким именем не существует"
     } else {
         response = JSON.parse(response);
         console.log(response);

@@ -20,8 +20,8 @@
                         <!--Если не залогинен-->
                         <section class="center-content" sec:authorize="!isAuthenticated()">
                             <h2>Чтобы просматривать фотографии необходимо войти в систему:</h2>
-                            <a class="" href="/registration"><button class="fill">Зарегестрироваться</button></a>
-                            <a class="" href="/login"><button class="fill">Войти в систему</button></a>
+                            <a class="ajaxLink" href="/registration"><button class="fill">Зарегестрироваться</button></a>
+                            <a class="ajaxLink" href="/login"><button class="fill">Войти в систему</button></a>
                         </section>
 
                         <section>
@@ -34,7 +34,7 @@
                         </section>
 
                         <!--Если модератор-->
-                        <section sec:authorize="hasRole('ROLE_ADMIN')">
+                        <section sec:authorize="hasRole('ROLE_MODERATOR')">
                             <a th:href="@{/moderator/image/add/country/*}" class="ajaxLink">
                                 <button class="fill">Добавить страну</button>
                             </a>

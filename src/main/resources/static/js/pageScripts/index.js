@@ -25,6 +25,7 @@ function init() {
 }
 
 function countryListRequest() {
+    if (document.getElementById("countries") != null)
     ajax.execute();
 }
 
@@ -36,7 +37,7 @@ function setCountryList(countries) {
 
 function pushCountry(country) {
     let a = document.createElement("a");
-    a.setAttribute("href", "/Photo/Country/" + country.name);
+    a.setAttribute("href", "/photo/Country/" + country.name);
     a.classList.add("ajaxLink");
     a.innerText = country.name;
     countriesSection.appendChild(a);

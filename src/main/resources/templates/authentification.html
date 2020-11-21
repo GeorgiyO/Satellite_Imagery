@@ -1,14 +1,48 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<form action="/login" method="POST">
-    Enter username: <input th:type="text" name="username"/><br/><br/>
-    Enter password <input th:type="text" name="password"><br/><br/>
-    <input th:type="submit" th:value="Login"/>
-</form>
-</body>
+<html>
+    <head>
+        <title>Nekogochan</title>
+        <th:block th:replace="fragment/head.html :: head"></th:block>
+    </head>
+    <body>
+        <div class="wrapper">
+            <div id="navDiv" th:insert="fragment/nav.html :: nav"></div>
+            <div id="content">
+                <th:block th:fragment="content">
+                    <section class="form">
+                        <form method="POST" action="/login" id="form">
+
+                            <p>Логин:</p>
+                            <div class="input-container">
+                                <input class="effect-1" type="text" placeholder="Логин" name="username">
+                                <span class="focus-border"></span>
+                            </div>
+                        
+                            <p>Пароль:</p>
+                            <div class="input-container">
+                                <input class="effect-1" type="text" placeholder="Пароль" name="password">
+                                <span class="focus-border"></span>
+                            </div>
+
+                            <span class="error" th:if="${error}">Неверный логин или пароль</span>
+
+                            <hr>
+                            
+                            <button class="fill" onclick="document.getElementById('form').submit()">Войти в аккаунт</button>
+                            
+                            <a class="ajaxLink" href="/">
+                                <button class="fill">Отмена</button>
+                            </a>
+                        </form>
+                    </section>
+                    <script>
+                        window.CurrentPage = {};
+                    </script>
+                </th:block>
+            </div>
+            <div th:insert="fragment/loading.html :: loading" id="pageLoading" class="hide"></div>
+        </div>
+        <th:block th:insert="fragment/footer.html :: footer"></th:block>
+        <th:block th:insert="fragment/scripts.html :: scripts"></th:block>
+    </body>
 </html>

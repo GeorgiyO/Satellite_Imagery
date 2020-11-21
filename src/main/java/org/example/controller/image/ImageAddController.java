@@ -61,7 +61,7 @@ public class ImageAddController {
 
         createImage(type, id, file);
 
-        return "redirect:/Photo/" + locationType + "/" + name;
+        return "redirect:/photo/" + locationType + "/" + name;
     }
 
 

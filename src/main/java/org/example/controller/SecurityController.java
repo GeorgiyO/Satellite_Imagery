@@ -1,12 +1,16 @@
 package org.example.controller;
 
+import org.example.controller.template.Fragment;
 import org.example.entity.User;
 import org.example.service.UserService;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * @author dchernichkin 19.11.2020
@@ -18,32 +22,52 @@ public class SecurityController {
     private UserService userService;
 
     @GetMapping("/login")
-    public String login() {
+    public String login(Model model) {
+        model.addAttribute("error", false);
         return "authentification";
     }
+
+    @GetMapping("/login/ajax")
+    public String loginAjax() {
+        return Fragment.get("authentification");
+    }
+
+    @GetMapping("/failure")
+    public String failure(Model model) {
+        model.addAttribute("error", true);
+        return "authentification";
+    }
+
 
     @PostMapping("/logout")
     public String logout() {
         return "redirect:/";
     }
 
-    @GetMapping("/failure")
-    public String failure() {
-        return "failauth";
-    }
-
     @GetMapping("/registration")
-    public String registration() {
+    public String registration(Model model) {
+        model.addAttribute("error", false);
         return "registration";
     }
 
+    @GetMapping("/registration/ajax")
+    public String registrationAjax(Model model) {
+        model.addAttribute("error", false);
+        return Fragment.get("registration");
+    }
+
     @PostMapping("/registration")
-    public String createUser(@RequestParam String name, @RequestParam String password) {
+    public String createUser(Model model, @RequestParam String name, @RequestParam String password) {
         User user = new User();
         user.setName(name);
         user.setPassword(password);
-        userService.saveUser(user);
-        return "redirect:login";
+        boolean succeed = userService.saveUser(user);
+        if (succeed) {
+            return "redirect:/login";
+        } else {
+            model.addAttribute("error", true);
+            return "/registration";
+        }
     }
 
 }

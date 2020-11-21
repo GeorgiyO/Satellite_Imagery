@@ -71,7 +71,7 @@ public class ImageUpdateController {
             updateFile(type, id, file);
         }
 
-        String redirect = "redirect:/Photo/" + locationType + "/";
+        String redirect = "redirect:/photo/" + locationType + "/";
         redirect += newName.strip().length() == 0 ? name : newName;
 
         return redirect;

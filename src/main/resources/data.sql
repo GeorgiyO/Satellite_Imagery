@@ -4,24 +4,6 @@ create database Satellite_Imagery;
 
 use Satellite_Imagery;
 
-create table user (
-	id bigint primary key auto_increment,
-	login varchar(255) not null unique,
-	password varchar(255) not null
-);
-
-create table role (
-	id bigint primary key auto_increment,
-	name varchar(255) not null unique
-);
-
-create table user_role (
-	user_id bigint,
-	role_id bigint,
-	foreign key (user_id) references user(id),
-	foreign key (role_id) references role(id)
-);
-
 create table country (
 	id bigint primary key auto_increment,
 	description varchar(255) not null,
@@ -66,3 +48,7 @@ create table image (
 insert into user values (1,'Dmitry','$2y$12$sHe0D.Vh.O1SK6Ub2DVruOrBrPzMjUadUXyIcuzPmr3QSnIEPwgD2');
 insert into roles values (1,'ROLE_ADMIN');
 insert into user_role values (1,1);
+
+insert into user values (2,'Ash','$2a$10$.HTsidEoA3HvoQUTV4u1R.SDOj.XZ.mQ8yJSeNQzmbskQHlFzpr52');
+insert into roles values (2, 'ROLE_MODERATOR');
+insert into user_role values (2,2);

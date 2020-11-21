@@ -1,4 +1,4 @@
-button {
+button, input[type=submit] {
     background-color: var(--background-color);
     border: 2px solid var(--text-border-color);
     font: inherit;
@@ -11,7 +11,7 @@ button {
     transition-duration: 0.25s;
 }
 
-button:focus {
+button:focus, input[type=submit]:focus {
     outline: none;
 }
 
@@ -19,18 +19,4 @@ button:focus {
     box-shadow: inset 0 0 0 2em var(--fill-color);
     color: var(--fill-hover-text-border-color);
     border-color: var(--fill-hover-text-border-color);
-}
-
-/*onclick to .pulse in js file*/
-.pulse span {
-    position: absolute;
-}
-
-.pulse-animation {
-    animation: pulse 0.7s;
-    box-shadow: 0 0 0 2em rgba(255,255,255,0);
-}
-
-@keyframes pulse {
-    0% { box-shadow: 0 0 0 0 var(--pulse-color); }
 }

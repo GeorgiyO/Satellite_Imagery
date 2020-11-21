@@ -19,8 +19,6 @@ ajax.setMethod("Get")
     })
     .setOnError(onError)
 
-// public:
-
 function setUpLinks(links) {
     console.log(links);
     Array.prototype.forEach.call(links, (link) => {
@@ -44,8 +42,6 @@ function loadError(errorHTML) {
     }
 }
 
-// private:
-
 function replace(e, href) {
     e.preventDefault();
     load(href);
@@ -58,7 +54,14 @@ function load(href) {
         let onClose = window.CurrentPage.onClose;
         if (onClose != undefined) onClose();
 
-        ajax.setUrl(href + "/ajax")
+        // костыль для работы моих ажаксных ссылок вместе с секьюрити, иначе не будет пускать на //ajax (для загрузки главной страницы)
+        let _href = href == window.location.origin + "/" ?
+                    window.location.origin + "/ajax" :
+                    href + "/ajax";
+
+        console.log(href + " " + _href);
+
+        ajax.setUrl(_href)
             .setOnSucceed((response) => {
                 onSucceed(response, href);
             })
