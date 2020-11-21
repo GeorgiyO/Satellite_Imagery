@@ -82,7 +82,25 @@ function setUserList(userList) {
 }
 
 function setRole(userId, userRole) {
+    let form = new FormData();
+    form.append("userId", userId);
+    form.append("userRole", userRole);
 
+    ajax.setUrl("/administrator/users/set-role")
+        .setMessage(form)
+        .setOnSucceed(onSuceedSetRole)
+        .execute();
+}
+
+function onSuceedSetRole(response) {
+    let div = document.getElementById("info");
+    div.innerText = "";
+    if (response == "succeed") {
+        div.innerText = "Роль изменена";
+        findUsers();
+    } else if (response == "not-exist") {
+        div.innerText = "Ошибка выполнения"
+    }
 }
 
 function deleteUser(userId) {
@@ -100,6 +118,7 @@ function onSuceedDelete(response) {
     div.innerText = "";
     if (response == "succeed") {
         div.innerText = "Пользователь удален";
+        findUsers();
     } else if (response == "not-exist") {
         div.innerText = "Пользователя не существует"
     }

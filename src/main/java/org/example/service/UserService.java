@@ -67,4 +67,17 @@ public class UserService implements UserDetailsService {
     public void deleteById(long id) {
         userRepository.deleteById(id);
     }
+
+    public void changeRole(long id, String roleStr) {
+        User user = userRepository.findById(id);
+        List<Role> roleList = roleRepository.findAll();
+        for (var role : roleList) {
+            if (role.getName().equals(roleStr)) {
+                user.getRoleList().clear();
+                user.getRoleList().add(role);
+                break;
+            }
+        }
+        userRepository.save(user);
+    }
 }
