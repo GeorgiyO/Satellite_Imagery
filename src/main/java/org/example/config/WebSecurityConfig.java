@@ -32,6 +32,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
+        //http.requiresChannel().anyRequest().requiresSecure();
         httpSecurity.httpBasic().disable()
                 .csrf()
                 .ignoringAntMatchers("/logout", "/login")
@@ -44,6 +45,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin()
                 .loginPage("/login").failureUrl("/failure").permitAll()
-                .and().logout().logoutUrl("/logout").deleteCookies("JSESSIONID").logoutSuccessUrl("/");
+                .and()
+                .logout().logoutUrl("/logout").deleteCookies("JSESSIONID").logoutSuccessUrl("/");
+
+                // httpSecurity.requiresChannel().anyRequest().requiresSecure();
+
     }
 }
