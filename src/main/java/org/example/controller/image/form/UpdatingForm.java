@@ -47,15 +47,15 @@ public class UpdatingForm {
         boolean isValid = true;
 
         if (!fieldIsEmpty(parentName) && !fieldIsMatches(parentName)) {
-            errors.addProperty("parentName", "Некорректный ввод");
+            errors.addProperty("parentName", "Поле должно содержать только русские и английские буквы, запятую, знак пробела");
             isValid = false;
         }
         if (!fieldIsEmpty(newName) && !fieldIsMatches(newName)) {
-            errors.addProperty("newName", "Некорректный ввод");
+            errors.addProperty("newName", "Поле должно содержать только русские и английские буквы, запятую, знак пробела");
             isValid = false;
         }
         if (!fieldIsEmpty(description) && !fieldIsMatches(description)) {
-            errors.addProperty("description", "Некорректный ввод");
+            errors.addProperty("description", "Поле должно содержать только русские и английские буквы, запятую, знак пробела");
             isValid = false;
         }
 

@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.regex.Pattern;
+
 /**
  * @author dchernichkin 19.11.2020
  */
@@ -46,18 +48,29 @@ public class SecurityController {
 
     @GetMapping("/registration")
     public String registration(Model model) {
-        model.addAttribute("error", false);
+        model.addAttribute("error", "");
         return "registration";
     }
 
     @GetMapping("/registration/ajax")
     public String registrationAjax(Model model) {
-        model.addAttribute("error", false);
+        model.addAttribute("error", "");
         return Fragment.get("registration");
     }
 
     @PostMapping("/registration")
     public String createUser(Model model, @RequestParam String name, @RequestParam String password) {
+
+        Pattern pattern = Pattern.compile("[a-zA-Z0-9]+");
+        if (!pattern.matcher(name).matches()) {
+            model.addAttribute("error", "Имя пользователя должно состоять из латинских букв и цифр");
+            return "/registration";
+        }
+        if (password.length() < 8) {
+            model.addAttribute("error", "Пароль должен состоять как минимум из 8-ми символов");
+            return "/registration";
+        }
+
         User user = new User();
         user.setName(name);
         user.setPassword(password);
@@ -65,7 +78,7 @@ public class SecurityController {
         if (succeed) {
             return "redirect:/login";
         } else {
-            model.addAttribute("error", true);
+            model.addAttribute("error", "Пользователь уже существует");
             return "/registration";
         }
     }

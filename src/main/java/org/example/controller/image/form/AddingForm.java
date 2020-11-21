@@ -47,7 +47,7 @@ public class AddingForm {
             errors.addProperty("name", "Пустое поле");
             isValid = false;
         } else if (!fieldIsMatches(name)) {
-            errors.addProperty("name", "Некорректный ввод");
+            errors.addProperty("name", "Поле должно содержать только русские и латинские символы, запятую, знак пробела");
             isValid = false;
         }
 
@@ -55,7 +55,7 @@ public class AddingForm {
             errors.addProperty("description", "Пустое поле");
             isValid = false;
         } else if (!fieldIsMatches(description)) {
-            errors.addProperty("description", "Некорректный ввод");
+            errors.addProperty("description", "Поле должно содержать только русские и латинские символы, запятую, знак пробела");
             isValid = false;
         }
 
