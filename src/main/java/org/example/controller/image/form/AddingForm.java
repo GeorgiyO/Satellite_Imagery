@@ -46,7 +46,7 @@ public class AddingForm {
         if (fieldIsEmpty(name)) {
             errors.addProperty("name", "Пустое поле");
             isValid = false;
-        } else if (!fieldIsMatches(name)) {
+        } else if (fieldIsNotMatches(name)) {
             errors.addProperty("name", "Поле должно содержать только русские и латинские символы, запятую, знак пробела");
             isValid = false;
         }
@@ -54,7 +54,7 @@ public class AddingForm {
         if (fieldIsEmpty(description)) {
             errors.addProperty("description", "Пустое поле");
             isValid = false;
-        } else if (!fieldIsMatches(description)) {
+        } else if (fieldIsNotMatches(description)) {
             errors.addProperty("description", "Поле должно содержать только русские и латинские символы, запятую, знак пробела");
             isValid = false;
         }
@@ -62,8 +62,8 @@ public class AddingForm {
         return isValid;
     }
 
-    private boolean fieldIsMatches(String field) {
-        return pattern.matcher(field).matches();
+    private boolean fieldIsNotMatches(String field) {
+        return !pattern.matcher(field).matches();
     }
 
     private boolean fieldIsEmpty(String field) {
@@ -91,7 +91,7 @@ public class AddingForm {
 
         countryStorage.add(country);
 
-        return countryStorage.get(name).getId();
+        return countryStorage.get(name).getLocationId();
     }
 
     private int createRegion() {
@@ -104,7 +104,7 @@ public class AddingForm {
 
         regionStorage.add(region);
 
-        return regionStorage.get(name).getId();
+        return regionStorage.get(name).getLocationId();
     }
 
     private int createCity() {
@@ -117,7 +117,7 @@ public class AddingForm {
 
         cityStorage.add(city);
 
-        return cityStorage.get(name).getId();
+        return cityStorage.get(name).getLocationId();
     }
 
     private int createAttraction() {
@@ -130,6 +130,6 @@ public class AddingForm {
 
         attractionStorage.add(attraction);
 
-        return attractionStorage.get(name).getId();
+        return attractionStorage.get(name).getLocationId();
     }
 }

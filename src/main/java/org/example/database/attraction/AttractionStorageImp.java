@@ -7,10 +7,7 @@ import org.example.domain.location.LocationType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
 
 public class AttractionStorageImp implements AttractionStorage {
@@ -52,13 +49,13 @@ public class AttractionStorageImp implements AttractionStorage {
     @Override
     public void add(Attraction attraction) {
         String sqlQuery = "INSERT INTO attraction (name, description, city_id) VALUES (?, ?, ?)";
-        jdbcTemplate.update(sqlQuery, attraction.getName(), attraction.getDescription(), attraction.getCity().getId());
+        jdbcTemplate.update(sqlQuery, attraction.getName(), attraction.getDescription(), attraction.getCity().getLocationId());
     }
 
     @Override
     public void update(Attraction attraction) {
         String sqlQuery = "UPDATE attraction SET name = ?, description = ?, city_id = ? WHERE id = ?";
-        jdbcTemplate.update(sqlQuery, attraction.getName(), attraction.getDescription(), attraction.getCity().getId(), attraction.getId());
+        jdbcTemplate.update(sqlQuery, attraction.getName(), attraction.getDescription(), attraction.getCity().getLocationId(), attraction.getLocationId());
     }
 
     @Override

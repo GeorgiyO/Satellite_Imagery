@@ -17,6 +17,9 @@ import org.example.database.country.CountryStorageImp;
 import org.example.database.image.ImageMapper;
 import org.example.database.image.ImageStorage;
 import org.example.database.image.ImageStorageImp;
+import org.example.database.location.LocationMapper;
+import org.example.database.location.LocationStorage;
+import org.example.database.location.LocationStorageImp;
 import org.example.database.region.RegionMapper;
 import org.example.database.region.RegionStorage;
 import org.example.database.region.RegionStorageImp;
@@ -69,6 +72,15 @@ public class BeanConfiguration {
     @Bean
     AttractionMapper attractionMapper() {
         return new AttractionMapper();
+    }
+
+    @Bean
+    LocationStorage locationStorage() {
+        return new LocationStorageImp();
+    }
+    @Bean
+    LocationMapper locationMapper() {
+        return new LocationMapper();
     }
 
     @Bean

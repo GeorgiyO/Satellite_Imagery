@@ -14,13 +14,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.sql.SQLException;
-import java.util.List;
 
 @Controller
 public class ImageGetController {
@@ -84,9 +82,9 @@ public class ImageGetController {
     private Object getObjectChildList(LocationType childType, String parentName) {
         switch (childType) {
             case COUNTRY: return countryStorage.getList();
-            case REGION: return regionStorage.getList(countryStorage.get(parentName).getId());
-            case CITY: return cityStorage.getList(regionStorage.get(parentName).getId());
-            case ATTRACTION: return attractionStorage.getList(cityStorage.get(parentName).getId());
+            case REGION: return regionStorage.getList(countryStorage.get(parentName).getLocationId());
+            case CITY: return cityStorage.getList(regionStorage.get(parentName).getLocationId());
+            case ATTRACTION: return attractionStorage.getList(cityStorage.get(parentName).getLocationId());
             default: throw new IllegalStateException("Unexpected value: " + childType);
         }
     }

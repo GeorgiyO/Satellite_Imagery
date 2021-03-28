@@ -48,15 +48,14 @@ public class UserService implements UserDetailsService {
         for (Role role:roleList) {
             if(role.getName().equals("ROLE_USER")) {
                 newUser.setRoleList(Arrays.asList(role));
-                userRepository.save(newUser);
+                userRepository.saveUser(newUser);
                 return true;
             }
         }
         Role role = new Role();
         role.setName("ROLE_USER");
-        roleRepository.save(role);
         newUser.setRoleList(Arrays.asList(role));
-        userRepository.save(newUser);
+        userRepository.saveUser(newUser);
         return true;
     }
 
@@ -78,6 +77,6 @@ public class UserService implements UserDetailsService {
                 break;
             }
         }
-        userRepository.save(user);
+        userRepository.saveUser(user);
     }
 }

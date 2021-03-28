@@ -18,9 +18,7 @@ public class RegionMapper implements RowMapper<Region> {
         Region region = new Region();
 
         region.setId(rs.getInt("id"));
-        region.setName(rs.getString("name"));
-        region.setDescription(rs.getString("description"));
-
+        region.setLocationId(rs.getInt("location_id"));
         region.setCountry(countryStorage.get(rs.getInt("country_id")));
 
         return region;

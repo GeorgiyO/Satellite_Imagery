@@ -17,7 +17,7 @@ public class CityMapper implements RowMapper<City> {
     public City mapRow(ResultSet rs, int i) throws SQLException {
         City city = new City();
 
-        city.setId(rs.getInt("id"));
+        city.setLocationId(rs.getInt("id"));
         city.setName(rs.getString("name"));
         city.setDescription(rs.getString("description"));
 

@@ -6,7 +6,6 @@ import org.example.database.city.CityStorage;
 import org.example.database.country.CountryStorage;
 import org.example.database.region.RegionStorage;
 import org.example.domain.location.*;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.regex.Pattern;
@@ -91,7 +90,7 @@ public class UpdatingForm {
         if (!fieldIsEmpty(description)) country.setDescription(description);
 
         countryStorage.update(country);
-        return country.getId();
+        return country.getLocationId();
     }
 
     private int updateRegion() {
@@ -103,7 +102,7 @@ public class UpdatingForm {
         if (!fieldIsEmpty(description)) region.setDescription(description);
 
         regionStorage.update(region);
-        return region.getId();
+        return region.getLocationId();
     }
 
     private int updateCity() {
@@ -115,7 +114,7 @@ public class UpdatingForm {
         if (!fieldIsEmpty(description)) city.setDescription(description);
 
         cityStorage.update(city);
-        return city.getId();
+        return city.getLocationId();
     }
 
     private int updateAttraction() {
@@ -127,6 +126,6 @@ public class UpdatingForm {
         if (!fieldIsEmpty(newName)) attraction.setName(newName);
 
         attractionStorage.update(attraction);
-        return attraction.getId();
+        return attraction.getLocationId();
     }
 }

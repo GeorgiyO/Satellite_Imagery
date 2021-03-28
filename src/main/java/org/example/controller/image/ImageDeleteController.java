@@ -60,22 +60,22 @@ public class ImageDeleteController {
 
     private void deleteCountry(String name) {
         Country country = countryStorage.get(name);
-        countryStorage.delete(country.getId());
+        countryStorage.delete(country.getLocationId());
     }
 
     private void deleteRegion(String name) {
         Region region = regionStorage.get(name);
-        regionStorage.delete(region.getId());
+        regionStorage.delete(region.getLocationId());
     }
 
     private void deleteCity(String name) {
         City city = cityStorage.get(name);
-        cityStorage.delete(city.getId());
+        cityStorage.delete(city.getLocationId());
     }
 
     private void deleteAttraction(String name) {
         Attraction attraction = attractionStorage.get(name);
-        attractionStorage.delete(attraction.getId());
+        attractionStorage.delete(attraction.getLocationId());
     }
 
 }

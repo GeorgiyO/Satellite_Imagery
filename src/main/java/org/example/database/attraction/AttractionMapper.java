@@ -17,7 +17,7 @@ public class AttractionMapper implements RowMapper<Attraction> {
     public Attraction mapRow(ResultSet rs, int i) throws SQLException {
         Attraction attraction = new Attraction();
 
-        attraction.setId(rs.getInt("id"));
+        attraction.setLocationId(rs.getInt("id"));
         attraction.setName(rs.getString("name"));
         attraction.setDescription(rs.getString("description"));
 

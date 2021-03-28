@@ -8,22 +8,25 @@ import org.springframework.jdbc.core.JdbcTemplate;
 public class ImageStorageImp implements ImageStorage {
 
     @Autowired
-    private JdbcTemplate jdbcTemplate;
+    private JdbcTemplate jdbc;
 
     @Override
     public Image get(LocationType locationType, int id) {
-        Image image = null;
-
-        String sqlQuery = "SELECT * FROM image WHERE location_type = ? and location_id = ?";
-        image = jdbcTemplate.query(sqlQuery, new ImageMapper(), locationType.toString(), id).get(0);
-
-        return image;
+        return jdbc.query(
+                "select * from image where location_id = ?",
+                new ImageMapper(),
+                id
+        ).get(0);
     }
 
     @Override
     public void add(Image image) {
-        String sqlQuery = "INSERT INTO image (location_type, location_id, data) VALUES (?, ?, ?)";
-        jdbcTemplate.update(sqlQuery, image.getLocationType().toString(), image.getLocationId(), image.getData());
+        jdbc.update(
+                "INSERT INTO image (location_type, location_id, data) VALUES (?, ?, ?)",
+                image.getLocationType().toString(),
+                image.getLocationId(),
+                image.getData()
+        );
     }
 
     @Override
@@ -35,6 +38,6 @@ public class ImageStorageImp implements ImageStorage {
     @Override
     public void delete(Image image) {
         String sqlQuery = "DELETE FROM image WHERE location_type = ? AND location_id = ?";
-        jdbcTemplate.update(sqlQuery, image.getLocationType().toString(), image.getLocationId());
+        jdbc.update(sqlQuery, image.getLocationType().toString(), image.getLocationId());
     }
 }

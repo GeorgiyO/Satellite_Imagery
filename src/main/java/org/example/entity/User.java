@@ -16,7 +16,6 @@ import javax.persistence.ManyToMany;
 import java.util.Collection;
 import java.util.List;
 
-
 /**
  * @author dchernichkin 04.11.2020
  */
@@ -39,6 +38,7 @@ public class User implements UserDetails {
     )
     private List<Role> roleList;
     private String password;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return getRoleList();

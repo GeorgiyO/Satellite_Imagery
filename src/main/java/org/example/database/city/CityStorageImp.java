@@ -52,13 +52,13 @@ public class CityStorageImp implements CityStorage {
     @Override
     public void add(City city) {
         String sqlQuery = "INSERT INTO city (name, description, region_id) VALUES (?, ?, ?)";
-        jdbcTemplate.update(sqlQuery, city.getName(), city.getDescription(), city.getRegion().getId());
+        jdbcTemplate.update(sqlQuery, city.getName(), city.getDescription(), city.getRegion().getLocationId());
     }
 
     @Override
     public void update(City city) {
         String sqlQuery = "UPDATE city SET name = ?, description = ?, region_id = ? WHERE id = ?";
-        jdbcTemplate.update(sqlQuery, city.getName(), city.getDescription(), city.getRegion().getId(), city.getId());
+        jdbcTemplate.update(sqlQuery, city.getName(), city.getDescription(), city.getRegion().getLocationId(), city.getLocationId());
     }
 
     @Override
