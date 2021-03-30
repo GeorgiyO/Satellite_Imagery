@@ -2,7 +2,6 @@ package org.example.database.image;
 
 import org.example.domain.Image;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 public class ImageStorageMySQL implements ImageStorage {

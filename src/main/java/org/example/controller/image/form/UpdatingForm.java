@@ -5,7 +5,6 @@ import org.example.database.attraction.AttractionStorage;
 import org.example.database.city.CityStorage;
 import org.example.database.country.CountryStorage;
 import org.example.database.region.RegionStorage;
-import org.example.domain.Image;
 import org.example.domain.location.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.multipart.MultipartFile;

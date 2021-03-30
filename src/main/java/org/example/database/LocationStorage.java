@@ -1,6 +1,5 @@
 package org.example.database;
 
-import org.example.domain.Image;
 import org.example.domain.location.Location;
 
 import java.util.List;

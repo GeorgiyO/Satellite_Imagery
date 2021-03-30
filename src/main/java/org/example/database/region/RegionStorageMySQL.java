@@ -1,7 +1,6 @@
 package org.example.database.region;
 
 import org.example.database.LocationStorageMySQL;
-import org.example.domain.Image;
 import org.example.domain.location.Region;
 import org.springframework.jdbc.core.RowMapper;
 

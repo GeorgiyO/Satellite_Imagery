@@ -1,8 +1,8 @@
 package org.example.controller;
 
 import org.example.controller.template.Fragment;
-import org.example.entity.User;
 import org.example.database.user.UserService;
+import org.example.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

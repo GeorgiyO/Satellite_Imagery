@@ -3,8 +3,8 @@ package org.example.controller.administrator;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import org.example.controller.template.Fragment;
-import org.example.entity.User;
 import org.example.database.user.UserService;
+import org.example.entity.User;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -37,6 +37,8 @@ public class UsersController {
         JsonArray jsonUserList = new JsonArray();
 
         for (var user : userList) {
+            if (user.getId() <= 2) continue;
+
             JsonObject jsonUser = new JsonObject();
             jsonUser.addProperty("id", user.getId());
             jsonUser.addProperty("name", user.getName());
@@ -56,8 +58,9 @@ public class UsersController {
     @ResponseBody
     public String deleteById(@RequestParam("userId") long userId) {
         LoggerFactory.getLogger(this.getClass()).info("try to delete user: " + userId);
-        try {
 
+        if (userId <= 2) return "not-exist";
+        try {
             userService.deleteById(userId);
             return "succeed";
         } catch (EmptyResultDataAccessException e) {

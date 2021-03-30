@@ -2,7 +2,6 @@ package org.example.controller.image;
 
 import org.example.controller.image.form.UpdatingForm;
 import org.example.database.image.ImageStorage;
-import org.example.domain.Image;
 import org.example.domain.location.LocationType;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
