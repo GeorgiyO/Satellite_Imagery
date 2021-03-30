@@ -6,11 +6,9 @@ drop procedure image_get;
 drop procedure image_add;
 drop procedure image_delete;
 drop procedure image_update;
-
 drop procedure location_add;
 drop procedure location_update;
 drop procedure location_delete;
-
 drop procedure attraction_get_by_id;
 drop procedure attraction_get_by_name;
 drop procedure attraction_get_list;
@@ -18,7 +16,6 @@ drop procedure attraction_add;
 drop procedure attraction_update;
 drop procedure attraction_delete;
 drop procedure attraction_delete_by_parent_id;
-
 drop procedure city_get_by_id;
 drop procedure city_get_by_name;
 drop procedure city_get_list;
@@ -26,7 +23,6 @@ drop procedure city_add;
 drop procedure city_update;
 drop procedure city_delete;
 drop procedure city_delete_by_parent_id;
-
 drop procedure region_get_by_id;
 drop procedure region_get_by_name;
 drop procedure region_get_list;
@@ -34,22 +30,17 @@ drop procedure region_add;
 drop procedure region_update;
 drop procedure region_delete;
 drop procedure region_delete_by_parent_id;
-
 drop procedure country_get_by_id;
 drop procedure country_get_by_name;
 drop procedure country_get_list;
 drop procedure country_add;
 drop procedure country_update;
 drop procedure country_delete;
-
-drop procedure user_delete;
-drop procedure user_get_by_id;
 drop procedure user_get_by_name;
-drop procedure user_get_list_by_name_containing;
 drop procedure user_add;
-
-drop procedure role_get_list;
-drop procedure role_update_user_roles;
+drop procedure user_get_list_by_name_containing;
+drop procedure user_delete;
+drop procedure role_update_user_role;
 
 delimiter $$
 
@@ -327,6 +318,29 @@ begin
 end $$
 
 
+create procedure user_get_by_name(in i_name varchar(255))
+select user.id as id, user.name as name, password, role.name as role from user, role
+where user.name = i_name and role.id in (
+    select role_id from user_role where user_id = user.id
+);
+$$
+
+create procedure user_add(in i_name varchar(255), in i_password varchar(255), in i_role varchar(255))
+begin
+    start transaction;
+    insert into user (name, password) values (i_name, i_password);
+    set @user_id = last_insert_id();
+    select id into @role_id from role where name = i_role;
+    insert into user_role (user_id, role_id) values (@user_id, @role_id);
+    commit;
+end $$
+
+create procedure user_get_list_by_name_containing(in i_name_fragment varchar(255))
+select user.id as id, user.name as name, password, role.name as role from user, role
+where user.name like concat('%', i_name_fragment, '%') and role.id in (
+    select role_id from user_role where user_id = user.id
+);
+$$
 
 create procedure user_delete(in i_id bigint)
 begin
@@ -336,32 +350,8 @@ begin
     commit;
 end $$
 
-create procedure user_get_by_id(in i_id bigint)
-select * from user where id = i_id;
+create procedure role_update_user_role(in i_user_id bigint, in i_role_name varchar(255))
+update user_role set role_id = (select id from role where name = i_role_name) where user_id = i_user_id;
 $$
-
-create procedure user_get_by_name(in i_name varchar(255))
-select * from user where name = i_name;
-$$
-
-create procedure user_get_list_by_name_containing(in i_name_fragment varchar(255))
-select * from user where name like concat('%', i_name_fragment, '%');
-$$
-
-create procedure user_add(in i_name varchar(255), in i_password varchar(255))
-insert into user (name, password) values (i_name, i_password);
-$$
-
-
-
-create procedure role_get_list()
-select * from roles
-$$
-
-create procedure role_update_user_roles(in i_user_id bigint, in i_role_name varchar(255))
-begin
-    select id into @role_id from roles where name = i_role_name;
-    update user_role set role_id = @role_id where user_id = i_user_id;
-end $$
 
 delimiter ;

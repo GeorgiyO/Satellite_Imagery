@@ -56,7 +56,7 @@ create table user (
     password varchar(255) not null
 );
 
-create table roles (
+create table role (
     id bigint primary key auto_increment,
     name varchar(255) not null
 );
@@ -65,15 +65,15 @@ create table user_role (
     user_id bigint,
     role_id bigint,
     foreign key (user_id) references user(id),
-    foreign key (role_id) references roles(id)
+    foreign key (role_id) references role(id)
 );
 
 insert into user values (1, 'admin', '$2y$12$F65eQA5xBawRa2ZQf8L././PkxwS63lCBlqyeK1XnSRjHrbwOEK2C'); /* pass: admin */
-insert into roles values (1, 'ROLE_ADMIN');
+insert into role values (1, 'ROLE_ADMIN');
 insert into user_role values (1, 1);
 
 insert into user values (2, 'moder', '$2y$12$30vbXCzD9axr9lK5QtseL.X0vaCuRLA91HXQ7ENscTRIV7ndYOOfC'); /* pass: moder */
-insert into roles values (2, 'ROLE_MODERATOR');
+insert into role values (2, 'ROLE_MODERATOR');
 insert into user_role values (2, 2);
 
-insert into roles values(3, 'ROLE_USER');
+insert into role values(3, 'ROLE_USER');

@@ -9,15 +9,19 @@ public class ImageStorageMySQL implements ImageStorage {
 
     @Autowired
     private JdbcTemplate jdbc;
-    @Autowired
-    private ApplicationContext ctx;
+
+    private final ImageMapper mapper;
+
+    public ImageStorageMySQL(ImageMapper mapper) {
+        this.mapper = mapper;
+    }
 
     @Override
     public Image get(int id) {
         System.out.println(id);
         return jdbc.query(
                 "call image_get(?)",
-                ctx.getBean(ImageMapper.class),
+                mapper,
                 id
         ).get(0);
     }

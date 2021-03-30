@@ -20,16 +20,21 @@ import org.example.database.image.ImageStorageMySQL;
 import org.example.database.region.RegionMapper;
 import org.example.database.region.RegionStorage;
 import org.example.database.region.RegionStorageMySQL;
+import org.example.database.user.UserMapper;
+import org.example.database.user.UserStorage;
+import org.example.database.user.UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.context.annotation.SessionScope;
 
 @Configuration
 public class BeanConfiguration {
+
     @Bean
     ImageStorage imageStorage() {
-        return new ImageStorageMySQL();
+        return new ImageStorageMySQL(imageMapper());
     }
+
     @Bean
     ImageMapper imageMapper() {
         return new ImageMapper();
@@ -39,6 +44,7 @@ public class BeanConfiguration {
     CountryStorage countryStorage() {
         return new CountryStorageMySQL("country", countryMapper());
     }
+
     @Bean
     CountryMapper countryMapper() {
         return new CountryMapper();
@@ -48,6 +54,7 @@ public class BeanConfiguration {
     RegionStorage regionStorage() {
         return new RegionStorageMySQL("region", regionMapper());
     }
+
     @Bean
     RegionMapper regionMapper() {
         return new RegionMapper();
@@ -57,6 +64,7 @@ public class BeanConfiguration {
     CityStorage cityStorage() {
         return new CityStorageMySQL("city", cityMapper());
     }
+
     @Bean
     CityMapper cityMapper() {
         return new CityMapper();
@@ -66,9 +74,25 @@ public class BeanConfiguration {
     AttractionStorage attractionStorage() {
         return new AttractionStorageMySQL("attraction", attractionMapper());
     }
+
     @Bean
     AttractionMapper attractionMapper() {
         return new AttractionMapper();
+    }
+
+    @Bean
+    UserStorage userStorage() {
+        return new UserService();
+    }
+
+    @Bean
+    UserMapper userMapper() {
+        return new UserMapper();
+    }
+
+    @Bean
+    UserService userService() {
+        return new UserService();
     }
 
     @Bean
@@ -81,6 +105,7 @@ public class BeanConfiguration {
     AddingForm addingForm() {
         return new AddingForm();
     }
+
     @Bean
     @SessionScope
     UpdatingForm updatingForm() {
@@ -91,4 +116,5 @@ public class BeanConfiguration {
     Gson gson() {
         return new Gson();
     }
+
 }

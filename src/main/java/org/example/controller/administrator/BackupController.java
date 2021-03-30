@@ -45,7 +45,7 @@ public class BackupController {
     }
 
 
-    @PostMapping("/backup/create")
+    @PostMapping("/create")
     public String createBackup(Model model) {
         LoggerFactory.getLogger(this.getClass()).info("creating backup...");
         try {
@@ -58,7 +58,7 @@ public class BackupController {
         return Fragment.get("/adm/backup-create-result");
     }
 
-    @PostMapping("/backup/restore")
+    @PostMapping("/restore")
     public String restoreDatabase(Model model) {
         LoggerFactory.getLogger(this.getClass()).info("restoring database...");
         try {

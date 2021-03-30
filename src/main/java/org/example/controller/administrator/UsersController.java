@@ -4,7 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import org.example.controller.template.Fragment;
 import org.example.entity.User;
-import org.example.service.UserService;
+import org.example.database.user.UserService;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -57,6 +57,7 @@ public class UsersController {
     public String deleteById(@RequestParam("userId") long userId) {
         LoggerFactory.getLogger(this.getClass()).info("try to delete user: " + userId);
         try {
+
             userService.deleteById(userId);
             return "succeed";
         } catch (EmptyResultDataAccessException e) {

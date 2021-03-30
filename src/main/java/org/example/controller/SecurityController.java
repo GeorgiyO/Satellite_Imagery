@@ -2,7 +2,7 @@ package org.example.controller;
 
 import org.example.controller.template.Fragment;
 import org.example.entity.User;
-import org.example.service.UserService;
+import org.example.database.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,9 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.regex.Pattern;
 
-/**
- * @author dchernichkin 19.11.2020
- */
 @Controller
 public class SecurityController {
 
@@ -72,10 +69,10 @@ public class SecurityController {
         User user = new User();
         user.setName(name);
         user.setPassword(password);
-        boolean succeed = userService.saveUser(user);
-        if (succeed) {
+        try {
+            userService.add(user);
             return "redirect:/login";
-        } else {
+        } catch (IllegalStateException e) {
             model.addAttribute("error", "Пользователь уже существует");
             return "/registration";
         }
