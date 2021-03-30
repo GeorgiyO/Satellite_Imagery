@@ -1,14 +1,11 @@
 package org.example.database.country;
 
+import org.example.database.LocationStorage;
+import org.example.domain.Image;
 import org.example.domain.location.Country;
 
 import java.util.List;
 
-public interface CountryStorage {
-    Country get(int id);
-    Country get(String name);
+public interface CountryStorage extends LocationStorage<Country> {
     List<Country> getList();
-    void add(Country country);
-    void update(Country country);
-    void delete(int id);
 }

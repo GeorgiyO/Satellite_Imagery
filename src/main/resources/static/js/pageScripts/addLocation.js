@@ -5,7 +5,7 @@ import {getParentType} from "/js/modules/ladder.js";
 console.log("add location js init");
 
 let type = () => {return document.querySelector("meta[name=locationType]").content};
-let parentName = () => {return document.querySelector("meta[name=parentName").content};
+let parentName = () => {return document.querySelector("meta[name=parentName]").content};
 let name = () => {return document.getElementById("name").value};
 let description = () => {return document.getElementById("description").value};
 let image = () => {return document.getElementById("image").files[0]};

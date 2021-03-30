@@ -10,10 +10,4 @@ public class Location {
     private int locationId;
     private String name;
     private String description;
-
-    public <T extends Location> void appendTo(T target) {
-        target.setLocationId(locationId);
-        target.setName(name);
-        target.setDescription(description);
-    }
 }

@@ -1,3 +1,5 @@
+delimiter ;
+
 drop database Satellite_Imagery;
 
 create database Satellite_Imagery;
@@ -46,7 +48,6 @@ create table attraction (
     foreign key (location_id) references location(id),
     foreign key (city_id) references city(id)
 );
-
 
 
 create table user (

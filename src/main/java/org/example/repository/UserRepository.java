@@ -18,34 +18,27 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query(
             nativeQuery = true,
-            value = "select * from user where name = ?1"
+            value = "call user_get_by_name(?1)"
     )
     User findByName(String name);
 
     @Query(
             nativeQuery = true,
-            value = "select * from user where id = ?1"
+            value = "call user_get_by_id(?1)"
     )
     User findById(long id);
 
     @Query(
             nativeQuery = true,
-            value = "select * from user where name like %?1%"
+            value = "call user_get_list_by_name_containing(?1)"
     )
     List<User> findByNameContaining(String name);
-
-    @Query(
-            nativeQuery = true,
-            value = "delete from user where id = ?1"
-    )
-    void deleteById(long id);
 
     @Modifying
     @Transactional
     @Query(
             nativeQuery = true,
-            value = "insert into user (name, password) values (:#{#_user.name}, :#{#_user.password})"
+            value = "call user_delete(?1)"
     )
-    void saveUser(@Param("_user")User user);
-
+    void deleteById(long id);
 }

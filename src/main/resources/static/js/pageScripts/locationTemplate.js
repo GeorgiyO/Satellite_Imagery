@@ -93,12 +93,14 @@ function appendHeader() {
 
 function appendPhoto() {
     let img = document.createElement("img");
-    img.src = "/image/" + type + "/" + location.id;
+    img.src = "/image/" + location.locationId;
     locationSection.appendChild(img);
 }
 
 function appendChildHrefs() {
     let childType = ladder.getChildType(type);
+
+    console.log(childType);
 
     if (childType != null) {
 

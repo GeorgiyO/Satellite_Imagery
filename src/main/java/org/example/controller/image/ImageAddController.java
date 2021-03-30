@@ -3,11 +3,14 @@ package org.example.controller.image;
 import org.example.controller.image.form.AddingForm;
 import org.example.database.image.ImageStorage;
 import org.example.domain.Image;
-import org.example.domain.location.*;
+import org.example.domain.location.LocationType;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -40,7 +43,6 @@ public class ImageAddController {
         }
 
         LocationType type;
-        int id = -1;
 
         try {
              type = LocationType.fromString(locationType);
@@ -48,29 +50,18 @@ public class ImageAddController {
             return "typeError";
         }
 
-        addingForm.setData(type, name, description, parentName);
+        addingForm.setData(type, name, description, parentName, file);
         if (addingForm.isValid()) {
             try {
-                id = addingForm.createLocation();
-            } catch (Exception e) {
+                addingForm.createLocation();
+            } catch (IllegalStateException e) {
                 return "parentNameError";
             }
         } else {
             return String.valueOf(addingForm.getErrors());
         }
 
-        createImage(type, id, file);
-
         return "redirect:/photo/" + locationType + "/" + name;
-    }
-
-
-    private void createImage(LocationType locationType, int id, MultipartFile file) throws IOException {
-        Image image = new Image();
-        image.setLocationType(locationType);
-        image.setLocationId(id);
-        image.setData(file.getBytes());
-        imageStorage.add(image);
     }
 
 }

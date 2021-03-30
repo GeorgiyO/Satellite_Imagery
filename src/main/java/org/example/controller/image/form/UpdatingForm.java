@@ -5,14 +5,18 @@ import org.example.database.attraction.AttractionStorage;
 import org.example.database.city.CityStorage;
 import org.example.database.country.CountryStorage;
 import org.example.database.region.RegionStorage;
+import org.example.domain.Image;
 import org.example.domain.location.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.regex.Pattern;
 
 public class UpdatingForm {
 
-    private static final Pattern pattern = Pattern.compile("^[A-Za-zА-Яа-я, ]+");
+    private static final Pattern pattern = Pattern.compile("^[A-Za-zА-Яа-я, _-]+");
+    public static final String patterErrorMsg = "Поле должно содержать только русские и английские буквы, запятую, знак пробела, дефис, знак нижнего подчеркивания";
 
     @Autowired
     private CountryStorage countryStorage;
@@ -28,10 +32,11 @@ public class UpdatingForm {
     private String parentName;
     private String newName;
     private String description;
+    private byte[] image;
 
     private JsonObject errors;
 
-    public void setData(LocationType type, String name, String parentName, String newName, String description) {
+    public void setData(LocationType type, String name, String parentName, String newName, String description, MultipartFile file) throws IOException {
 
         errors = new JsonObject(); // пришли новые данные значит ошибки нужно сбросить
 
@@ -40,92 +45,89 @@ public class UpdatingForm {
         this.parentName = parentName;
         this.newName = newName;
         this.description = description;
+        this.image = file.getBytes();
     }
 
     public boolean isValid() {
         boolean isValid = true;
 
-        if (!fieldIsEmpty(parentName) && !fieldIsMatches(parentName)) {
-            errors.addProperty("parentName", "Поле должно содержать только русские и английские буквы, запятую, знак пробела");
+        if (fieldIsNotEmpty(parentName) && fieldIsNotMatches(parentName)) {
+            errors.addProperty("parentName", patterErrorMsg);
             isValid = false;
         }
-        if (!fieldIsEmpty(newName) && !fieldIsMatches(newName)) {
-            errors.addProperty("newName", "Поле должно содержать только русские и английские буквы, запятую, знак пробела");
+        if (fieldIsNotEmpty(newName) && fieldIsNotMatches(newName)) {
+            errors.addProperty("newName", patterErrorMsg);
             isValid = false;
         }
-        if (!fieldIsEmpty(description) && !fieldIsMatches(description)) {
-            errors.addProperty("description", "Поле должно содержать только русские и английские буквы, запятую, знак пробела");
+        if (fieldIsNotEmpty(description) && fieldIsNotMatches(description)) {
+            errors.addProperty("description", patterErrorMsg);
             isValid = false;
         }
 
         return isValid;
     }
 
-    private boolean fieldIsMatches(String field) {
-        return pattern.matcher(field).matches();
+    private boolean fieldIsNotMatches(String field) {
+        return !pattern.matcher(field).matches();
     }
 
-    private boolean fieldIsEmpty(String field) {
-        return field.strip().length() == 0;
+    private boolean fieldIsNotEmpty(String field) {
+        return field.strip().length() != 0;
     }
 
     public JsonObject getErrors() {
         return errors;
     }
 
-    public int updateLocation() {
+    public void updateLocation() {
         switch (type) {
-            case COUNTRY: return updateCountry();
-            case REGION: return updateRegion();
-            case CITY: return updateCity();
-            case ATTRACTION: return updateAttraction();
+            case COUNTRY: updateCountry(); break;
+            case REGION: updateRegion(); break;
+            case CITY: updateCity(); break;
+            case ATTRACTION: updateAttraction(); break;
             default: throw new IllegalStateException("Unexpected value: " + type);
         }
     }
 
-    private int updateCountry() {
+    private void updateCountry() {
         Country country = countryStorage.get(name);
 
-        if (!fieldIsEmpty(newName)) country.setName(newName);
-        if (!fieldIsEmpty(description)) country.setDescription(description);
+        if (fieldIsNotEmpty(newName)) country.setName(newName);
+        if (fieldIsNotEmpty(description)) country.setDescription(description);
 
-        countryStorage.update(country);
-        return country.getLocationId();
+        countryStorage.update(country, image);
     }
 
-    private int updateRegion() {
+    private void updateRegion() {
         Region region = regionStorage.get(name);
 
-        if (!fieldIsEmpty(parentName)) region.setCountry(countryStorage.get(parentName));
+        if (fieldIsNotEmpty(parentName)) region.setCountry(countryStorage.get(parentName));
 
-        if (!fieldIsEmpty(newName)) region.setName(newName);
-        if (!fieldIsEmpty(description)) region.setDescription(description);
+        if (fieldIsNotEmpty(newName)) region.setName(newName);
+        if (fieldIsNotEmpty(description)) region.setDescription(description);
 
-        regionStorage.update(region);
-        return region.getLocationId();
+        regionStorage.update(region, image);
     }
 
-    private int updateCity() {
+    private void updateCity() {
         City city = cityStorage.get(name);
 
-        if (!fieldIsEmpty(parentName)) city.setRegion(regionStorage.get(parentName));
+        if (fieldIsNotEmpty(parentName)) city.setRegion(regionStorage.get(parentName));
 
-        if (!fieldIsEmpty(newName)) city.setName(newName);
-        if (!fieldIsEmpty(description)) city.setDescription(description);
+        if (fieldIsNotEmpty(newName)) city.setName(newName);
+        if (fieldIsNotEmpty(description)) city.setDescription(description);
 
-        cityStorage.update(city);
-        return city.getLocationId();
+        cityStorage.update(city, image);
     }
 
-    private int updateAttraction() {
+    private void updateAttraction() {
         Attraction attraction = attractionStorage.get(name);
 
-        if (!fieldIsEmpty(parentName)) attraction.setCity(cityStorage.get(parentName));
+        if (fieldIsNotEmpty(parentName)) attraction.setCity(cityStorage.get(parentName));
 
-        if (!fieldIsEmpty(description)) attraction.setDescription(description);
-        if (!fieldIsEmpty(newName)) attraction.setName(newName);
+        if (fieldIsNotEmpty(description)) attraction.setDescription(description);
+        if (fieldIsNotEmpty(newName)) attraction.setName(newName);
 
-        attractionStorage.update(attraction);
-        return attraction.getLocationId();
+        attractionStorage.update(attraction, image);
     }
 }

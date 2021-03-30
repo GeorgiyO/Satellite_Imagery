@@ -7,22 +7,19 @@ import org.example.database.administrator.BackupHandler;
 import org.example.database.administrator.WindowsMySQLBackupHandler;
 import org.example.database.attraction.AttractionMapper;
 import org.example.database.attraction.AttractionStorage;
-import org.example.database.attraction.AttractionStorageImp;
+import org.example.database.attraction.AttractionStorageMySQL;
 import org.example.database.city.CityMapper;
 import org.example.database.city.CityStorage;
-import org.example.database.city.CityStorageImp;
+import org.example.database.city.CityStorageMySQL;
 import org.example.database.country.CountryMapper;
 import org.example.database.country.CountryStorage;
-import org.example.database.country.CountryStorageImp;
+import org.example.database.country.CountryStorageMySQL;
 import org.example.database.image.ImageMapper;
 import org.example.database.image.ImageStorage;
-import org.example.database.image.ImageStorageImp;
-import org.example.database.location.LocationMapper;
-import org.example.database.location.LocationStorage;
-import org.example.database.location.LocationStorageImp;
+import org.example.database.image.ImageStorageMySQL;
 import org.example.database.region.RegionMapper;
 import org.example.database.region.RegionStorage;
-import org.example.database.region.RegionStorageImp;
+import org.example.database.region.RegionStorageMySQL;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.context.annotation.SessionScope;
@@ -31,7 +28,7 @@ import org.springframework.web.context.annotation.SessionScope;
 public class BeanConfiguration {
     @Bean
     ImageStorage imageStorage() {
-        return new ImageStorageImp();
+        return new ImageStorageMySQL();
     }
     @Bean
     ImageMapper imageMapper() {
@@ -40,7 +37,7 @@ public class BeanConfiguration {
 
     @Bean
     CountryStorage countryStorage() {
-        return new CountryStorageImp();
+        return new CountryStorageMySQL("country", countryMapper());
     }
     @Bean
     CountryMapper countryMapper() {
@@ -49,7 +46,7 @@ public class BeanConfiguration {
 
     @Bean
     RegionStorage regionStorage() {
-        return new RegionStorageImp();
+        return new RegionStorageMySQL("region", regionMapper());
     }
     @Bean
     RegionMapper regionMapper() {
@@ -58,7 +55,7 @@ public class BeanConfiguration {
 
     @Bean
     CityStorage cityStorage() {
-        return new CityStorageImp();
+        return new CityStorageMySQL("city", cityMapper());
     }
     @Bean
     CityMapper cityMapper() {
@@ -67,20 +64,11 @@ public class BeanConfiguration {
 
     @Bean
     AttractionStorage attractionStorage() {
-        return new AttractionStorageImp();
+        return new AttractionStorageMySQL("attraction", attractionMapper());
     }
     @Bean
     AttractionMapper attractionMapper() {
         return new AttractionMapper();
-    }
-
-    @Bean
-    LocationStorage locationStorage() {
-        return new LocationStorageImp();
-    }
-    @Bean
-    LocationMapper locationMapper() {
-        return new LocationMapper();
     }
 
     @Bean

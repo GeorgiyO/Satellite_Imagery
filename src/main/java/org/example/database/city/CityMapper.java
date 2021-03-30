@@ -1,5 +1,6 @@
 package org.example.database.city;
 
+import org.example.database.LocationMapper;
 import org.example.database.region.RegionStorage;
 import org.example.domain.location.City;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,13 +17,8 @@ public class CityMapper implements RowMapper<City> {
     @Override
     public City mapRow(ResultSet rs, int i) throws SQLException {
         City city = new City();
-
-        city.setLocationId(rs.getInt("id"));
-        city.setName(rs.getString("name"));
-        city.setDescription(rs.getString("description"));
-
+        LocationMapper.setMainFields(rs, city);
         city.setRegion(regionStorage.get(rs.getInt("region_id")));
-
         return city;
     }
 }

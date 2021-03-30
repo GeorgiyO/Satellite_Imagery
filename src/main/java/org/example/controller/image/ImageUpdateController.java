@@ -1,21 +1,18 @@
 package org.example.controller.image;
 
 import org.example.controller.image.form.UpdatingForm;
-import org.example.database.attraction.AttractionStorage;
-import org.example.database.city.CityStorage;
-import org.example.database.country.CountryStorage;
 import org.example.database.image.ImageStorage;
-import org.example.database.region.RegionStorage;
 import org.example.domain.Image;
-import org.example.domain.location.*;
+import org.example.domain.location.LocationType;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Objects;
 
@@ -36,8 +33,7 @@ public class ImageUpdateController {
                                  @RequestParam("parentName") String parentName,
                                  @RequestParam("newName") String newName,
                                  @RequestParam("description") String description,
-                                 @RequestParam("image") MultipartFile file,
-                                 HttpServletResponse response) throws IOException {
+                                 @RequestParam("image") MultipartFile file) throws IOException {
 
         LoggerFactory.getLogger(this.getClass()).info(String.format("try update location: %s %s %s %s %s", locationType, name, parentName, newName, description));
         LoggerFactory.getLogger(this.getClass()).info(String.format("with file: %s %s %s", file.getOriginalFilename(), file.getContentType(), file.getSize()));
@@ -47,7 +43,6 @@ public class ImageUpdateController {
         }
 
         LocationType type;
-        int id = -1;
 
         try {
             type = LocationType.fromString(locationType);
@@ -55,11 +50,11 @@ public class ImageUpdateController {
             return "typeError";
         }
 
-        updatingForm.setData(type, name, parentName, newName , description);
+        updatingForm.setData(type, name, parentName, newName , description, file);
 
         if (updatingForm.isValid()) {
             try {
-                id = updatingForm.updateLocation();
+                updatingForm.updateLocation();
             } catch (Exception e) {
                 return "uncheckedFieldsError";
             }
@@ -67,22 +62,10 @@ public class ImageUpdateController {
             return String.valueOf(updatingForm.getErrors());
         }
 
-        if (!file.isEmpty()) {
-            updateFile(type, id, file);
-        }
-
         String redirect = "redirect:/photo/" + locationType + "/";
         redirect += newName.strip().length() == 0 ? name : newName;
 
         return redirect;
-    }
-
-    private void updateFile(LocationType type, int locationId, MultipartFile file) throws IOException {
-        Image image = new Image();
-        image.setLocationType(type);
-        image.setLocationId(locationId);
-        image.setData(file.getBytes());
-        imageStorage.update(image);
     }
 
 }

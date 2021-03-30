@@ -28,7 +28,7 @@ public class LocationController {
                           @PathVariable("locationName") String locationName) {
 
         model.addAttribute("locationType", locationType)
-                .addAttribute("locationName", locationName);
+             .addAttribute("locationName", locationName);
         return Fragment.get(template);
     }
 }

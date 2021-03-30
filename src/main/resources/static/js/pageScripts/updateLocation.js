@@ -5,7 +5,7 @@ import {getParentType} from "/js/modules/ladder.js";
 console.log("add location js init");
 
 let type = () => {return document.querySelector("meta[name=locationType]").content};
-let name = () => {return document.querySelector("meta[name=oldName").content};
+let name = () => {return document.querySelector("meta[name=oldName]").content};
 let parentName = () => {return document.getElementById("parentName").value};
 let newName = () => {return document.getElementById("newName").value};
 let description = () => {return document.getElementById("description").value};
@@ -95,3 +95,5 @@ function addBackButton() {
     
     document.getElementsByClassName("form")[0].appendChild(a);
 }
+
+

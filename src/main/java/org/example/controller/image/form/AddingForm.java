@@ -7,12 +7,15 @@ import org.example.database.country.CountryStorage;
 import org.example.database.region.RegionStorage;
 import org.example.domain.location.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.regex.Pattern;
 
 public class AddingForm {
 
-    private static final Pattern pattern = Pattern.compile("^[A-Za-zА-Яа-я, ]+");
+    private static final Pattern pattern = Pattern.compile("^[A-Za-zА-Яа-я, _-]+");
+    public static final String patterErrorMsg = "Поле должно содержать только русские и английские буквы, запятую, знак пробела, дефис, знак нижнего подчеркивания";
 
     @Autowired
     private CountryStorage countryStorage;
@@ -27,10 +30,11 @@ public class AddingForm {
     private String name;
     private String description;
     private String parentName;
+    private byte[] image;
 
     private JsonObject errors;
 
-    public void setData(LocationType type, String name, String description, String parentName) {
+    public void setData(LocationType type, String name, String description, String parentName, MultipartFile file) throws IOException {
 
         errors = new JsonObject(); // пришли новые данные значит ошибки нужно сбросить
 
@@ -38,6 +42,7 @@ public class AddingForm {
         this.name = name;
         this.description = description;
         this.parentName = parentName;
+        this.image = file.getBytes();
     }
 
     public boolean isValid() {
@@ -47,7 +52,7 @@ public class AddingForm {
             errors.addProperty("name", "Пустое поле");
             isValid = false;
         } else if (fieldIsNotMatches(name)) {
-            errors.addProperty("name", "Поле должно содержать только русские и латинские символы, запятую, знак пробела");
+            errors.addProperty("name", patterErrorMsg);
             isValid = false;
         }
 
@@ -55,7 +60,7 @@ public class AddingForm {
             errors.addProperty("description", "Пустое поле");
             isValid = false;
         } else if (fieldIsNotMatches(description)) {
-            errors.addProperty("description", "Поле должно содержать только русские и латинские символы, запятую, знак пробела");
+            errors.addProperty("description", patterErrorMsg);
             isValid = false;
         }
 
@@ -74,27 +79,25 @@ public class AddingForm {
         return errors;
     }
 
-    public int createLocation() {
+    public void createLocation() {
         switch (type) {
-            case COUNTRY: return createCountry();
-            case REGION: return createRegion();
-            case CITY: return createCity();
-            case ATTRACTION: return createAttraction();
+            case COUNTRY: createCountry(); return;
+            case REGION: createRegion(); return;
+            case CITY: createCity(); return;
+            case ATTRACTION: createAttraction(); return;
             default: throw new IllegalStateException("Unexpected value: " + type.toString());
         }
     }
 
-    private int createCountry() {
+    private void createCountry() {
         Country country = new Country();
         country.setName(name);
         country.setDescription(description);
 
-        countryStorage.add(country);
-
-        return countryStorage.get(name).getLocationId();
+        countryStorage.add(country, image);
     }
 
-    private int createRegion() {
+    private void createRegion() {
         Country country = countryStorage.get(parentName);
 
         Region region = new Region();
@@ -102,12 +105,10 @@ public class AddingForm {
         region.setDescription(description);
         region.setCountry(country);
 
-        regionStorage.add(region);
-
-        return regionStorage.get(name).getLocationId();
+        regionStorage.add(region, image);
     }
 
-    private int createCity() {
+    private void createCity() {
         Region region = regionStorage.get(parentName);
 
         City city = new City();
@@ -115,12 +116,10 @@ public class AddingForm {
         city.setDescription(description);
         city.setRegion(region);
 
-        cityStorage.add(city);
-
-        return cityStorage.get(name).getLocationId();
+        cityStorage.add(city, image);
     }
 
-    private int createAttraction() {
+    private void createAttraction() {
         City city = cityStorage.get(parentName);
 
         Attraction attraction = new Attraction();
@@ -128,8 +127,6 @@ public class AddingForm {
         attraction.setDescription(description);
         attraction.setCity(city);
 
-        attractionStorage.add(attraction);
-
-        return attractionStorage.get(name).getLocationId();
+        attractionStorage.add(attraction, image);
     }
 }

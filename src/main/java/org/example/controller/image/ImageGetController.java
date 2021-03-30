@@ -7,7 +7,7 @@ import org.example.database.country.CountryStorage;
 import org.example.database.image.ImageStorage;
 import org.example.database.region.RegionStorage;
 import org.example.domain.Image;
-import org.example.domain.location.*;
+import org.example.domain.location.LocationType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -37,12 +37,11 @@ public class ImageGetController {
     @Autowired
     private Gson JSON;
 
-    @GetMapping(value = "/image/{locationType}/{locationId}", produces = MediaType.IMAGE_PNG_VALUE)
+    @GetMapping(value = "/image/{locationId}", produces = MediaType.IMAGE_PNG_VALUE)
     public ResponseEntity<byte[]> getImageByCountry(
-            @PathVariable String locationType,
             @PathVariable int locationId) throws SQLException {
 
-        Image image = imageStorage.get(LocationType.fromString(locationType), locationId);
+        Image image = imageStorage.get(locationId);
         byte[] data = image.getData();
 
         final HttpHeaders headers = new HttpHeaders();
@@ -66,7 +65,11 @@ public class ImageGetController {
             @PathVariable String childType,
             @PathVariable String parentName) {
 
-        return JSON.toJson(getObjectChildList(LocationType.fromString(childType), parentName));
+        var res = JSON.toJson(getObjectList(LocationType.fromString(childType), parentName));
+
+        System.out.println(res);
+
+        return res;
     }
 
     private Object getObjectLocation(LocationType type, String name) {
@@ -79,12 +82,12 @@ public class ImageGetController {
         }
     }
 
-    private Object getObjectChildList(LocationType childType, String parentName) {
+    private Object getObjectList(LocationType childType, String parentName) {
         switch (childType) {
             case COUNTRY: return countryStorage.getList();
-            case REGION: return regionStorage.getList(countryStorage.get(parentName).getLocationId());
-            case CITY: return cityStorage.getList(regionStorage.get(parentName).getLocationId());
-            case ATTRACTION: return attractionStorage.getList(cityStorage.get(parentName).getLocationId());
+            case REGION: return regionStorage.getList(countryStorage.get(parentName).getId());
+            case CITY: return cityStorage.getList(regionStorage.get(parentName).getId());
+            case ATTRACTION: return attractionStorage.getList(cityStorage.get(parentName).getId());
             default: throw new IllegalStateException("Unexpected value: " + childType);
         }
     }
