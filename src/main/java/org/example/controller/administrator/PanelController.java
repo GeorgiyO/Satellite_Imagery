@@ -11,12 +11,12 @@ public class PanelController {
 
     @GetMapping
     public String admPanel() {
-        return "/adm/panel";
+        return "adm/panel";
     }
 
     @GetMapping("/ajax")
     public String admPanelAjax() {
-        return Fragment.get("/adm/panel");
+        return Fragment.get("adm/panel");
     }
 
 }

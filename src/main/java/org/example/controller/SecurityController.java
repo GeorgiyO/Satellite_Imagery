@@ -59,11 +59,11 @@ public class SecurityController {
         Pattern pattern = Pattern.compile("[a-zA-Z0-9]+");
         if (!pattern.matcher(name).matches()) {
             model.addAttribute("error", "Имя пользователя должно состоять из латинских букв и цифр");
-            return "/registration";
+            return "registration";
         }
         if (password.length() < 8) {
             model.addAttribute("error", "Пароль должен состоять как минимум из 8-ми символов");
-            return "/registration";
+            return "registration";
         }
 
         User user = new User();
@@ -74,7 +74,7 @@ public class SecurityController {
             return "redirect:/login";
         } catch (IllegalStateException e) {
             model.addAttribute("error", "Пользователь уже существует");
-            return "/registration";
+            return "registration";
         }
     }
 

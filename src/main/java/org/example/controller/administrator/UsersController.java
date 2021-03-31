@@ -22,11 +22,11 @@ public class UsersController {
 
     @GetMapping
     public String usersPanel() {
-        return "/adm/users-panel";
+        return "adm/users-panel";
     }
     @GetMapping("/ajax")
     public String usersPanelAjax() {
-        return Fragment.get("/adm/users-panel");
+        return Fragment.get("adm/users-panel");
     }
 
     @PostMapping("/get-list")

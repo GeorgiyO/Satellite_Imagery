@@ -19,29 +19,29 @@ public class BackupController {
 
     @GetMapping()
     public String backupPage(Model model) {
-        return "/adm/backup";
+        return "adm/backup";
     }
     @GetMapping("/ajax")
     public String backupPageAjax(Model model) {
-        return Fragment.get( "/adm/backup");
+        return Fragment.get("adm/backup");
     }
 
     @GetMapping("/create")
     public String createBackupPage() {
-        return "/adm/backup-create";
+        return "adm/backup-create";
     }
     @GetMapping("/create/ajax")
     public String createBackupPageAjax(Model model) {
-        return Fragment.get( "/adm/backup-create");
+        return Fragment.get("adm/backup-create");
     }
 
     @GetMapping("/restore")
     public String restoreDatabasePage() {
-        return "/adm/backup-restore";
+        return "adm/backup-restore";
     }
     @GetMapping("/restore/ajax")
     public String restoreDatabasePageAjax(Model model) {
-        return Fragment.get( "/adm/backup-restore");
+        return Fragment.get("adm/backup-restore");
     }
 
 
@@ -55,7 +55,7 @@ public class BackupController {
             model.addAttribute("succeed", false);
             LoggerFactory.getLogger(this.getClass()).error(e.getMessage(), e);
         }
-        return Fragment.get("/adm/backup-create-result");
+        return Fragment.get("adm/backup-create-result");
     }
 
     @PostMapping("/restore")
@@ -68,7 +68,7 @@ public class BackupController {
             model.addAttribute("succeed", false);
             LoggerFactory.getLogger(this.getClass()).error(e.getMessage(), e);
         }
-        return Fragment.get("/adm/backup-restore-result");
+        return Fragment.get("adm/backup-restore-result");
     }
 
 }
